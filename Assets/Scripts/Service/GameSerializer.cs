@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Game.Model;
+using Game.Shared;
 
 namespace Game.Service {
 	public sealed class GameSerializer {

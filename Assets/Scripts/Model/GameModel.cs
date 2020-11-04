@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Game.Model;
+using Game.Shared;
 
 namespace Game.Model {
 	[Serializable]

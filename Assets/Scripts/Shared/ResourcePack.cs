@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Model {
+namespace Game.Shared {
 	[Serializable]
 	public sealed class ResourcePack : IEquatable<ResourcePack> {
 		public List<ResourceModel> Content = new List<ResourceModel>();

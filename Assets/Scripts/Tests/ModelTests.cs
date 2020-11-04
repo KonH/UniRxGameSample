@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Game.Model;
+using Game.Shared;
 using NUnit.Framework;
 using UnityEngine;
 

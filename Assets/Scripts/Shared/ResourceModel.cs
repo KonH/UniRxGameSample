@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Model {
+namespace Game.Shared {
 	[Serializable]
 	public sealed class ResourceModel : IComparable<ResourceModel>, IEquatable<ResourceModel> {
 		public string Name;

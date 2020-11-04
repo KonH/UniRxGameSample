@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Model;
+using Game.Shared;
 using UniRx;
 
 namespace Game.ViewModel {

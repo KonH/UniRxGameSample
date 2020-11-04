@@ -1,4 +1,5 @@
 using System;
+using Game.Shared;
 
 namespace Game.Model {
 	[Serializable]
