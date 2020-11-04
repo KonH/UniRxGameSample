@@ -1,19 +1,21 @@
-﻿using Game.ViewModel;
+﻿using Game.Config;
+using Game.ViewModel;
 using UnityEngine;
 
 namespace Game.View {
 	public sealed class GameView : MonoBehaviour {
+		[SerializeField] GameConfig     _config;
 		[SerializeField] ResourceView[] _resourceViews;
 		[SerializeField] UnitsView      _unitsView;
 
-		SavableGameViewModel _viewModel;
+		SerializableGameViewModel _viewModel;
 
 		void Awake() {
 			Init();
 		}
 
 		void Init() {
-			_viewModel = new SavableGameViewModel();
+			_viewModel = new SerializableGameViewModel(_config);
 			var resources = _viewModel.ViewModel.Resources;
 			foreach ( var view in _resourceViews ) {
 				view.Init(resources);

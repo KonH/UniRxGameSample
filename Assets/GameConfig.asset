@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311c972cd961843288590878e71e27ad, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  InitialResource:
+    Name: coin
+    Amount: 100
+  Units:
+  - Type: wolf
+    Prices:
+    - Name: coin
+      Amount: 50
+    - Name: stick
+      Amount: 10
+    - Name: book
+      Amount: 20
+  - Type: cocatrice
+    Prices:
+    - Name: stick
+      Amount: 5
+    - Name: book
+      Amount: 10
+    - Name: bottle
+      Amount: 20
+  - Type: ghost
+    Prices:
+    - Name: book
+      Amount: 5
+    - Name: bottle
+      Amount: 10
+    - Name: gold
+      Amount: 20
+  - Type: dragon
+    Prices:
+    - Name: bottle
+      Amount: 5
+    - Name: gold
+      Amount: 10
+    - Name: coin
+      Amount: 10000

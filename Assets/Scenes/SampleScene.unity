@@ -1206,6 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9ff8b05c7d043ca9b6567614db0b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 4b16ed209b76b484ab704e84e51773e4, type: 2}
   _resourceViews:
   - {fileID: 312872960}
   - {fileID: 1688090054}
