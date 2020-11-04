@@ -12,12 +12,16 @@ namespace Game.View {
 		[SerializeField] UnitView    _unitPrefab;
 		[SerializeField] Transform[] _places;
 
+		GameViewModel _game;
+
 		UnitBuyView _placeholder;
 
 		List<UnitView> _instances = new List<UnitView>();
 
-		public void Init(UnitBuyView placeholderPrefab, ReactiveCollection<UnitViewModel> viewModel) {
+		public void Init(
+			UnitBuyView placeholderPrefab, GameViewModel game, ReactiveCollection<UnitViewModel> viewModel) {
 			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);
+			_game        = game;
 			viewModel
 				.ObserveAdd()
 				.Where(e => e.Value.Type == _type)
@@ -49,6 +53,7 @@ namespace Game.View {
 				trans.localPosition = Vector3.zero;
 			}
 			_placeholder.gameObject.SetActive(place != null);
+			_placeholder.Init(_game, _type);
 		}
 	}
 }

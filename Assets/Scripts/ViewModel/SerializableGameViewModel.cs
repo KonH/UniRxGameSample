@@ -10,7 +10,7 @@ namespace Game.ViewModel {
 		public SerializableGameViewModel(GameConfig config) {
 			_serializer = new GameSerializer(config);
 			var model = _serializer.LoadOrCreate();
-			ViewModel = new GameViewModel(model);
+			ViewModel = new GameViewModel(config, model);
 		}
 	}
 }

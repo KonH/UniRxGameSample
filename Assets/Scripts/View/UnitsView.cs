@@ -7,9 +7,9 @@ namespace Game.View {
 		[SerializeField] UnitRowView[] _rows;
 		[SerializeField] UnitBuyView   _placeholderPrefab;
 
-		public void Init(ReactiveCollection<UnitViewModel> viewModel) {
+		public void Init(GameViewModel game, ReactiveCollection<UnitViewModel> viewModel) {
 			foreach ( var row in _rows ) {
-				row.Init(_placeholderPrefab, viewModel);
+				row.Init(_placeholderPrefab, game, viewModel);
 			}
 		}
 	}

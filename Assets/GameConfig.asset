@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 311c972cd961843288590878e71e27ad, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  Resources:
+  - Name: coin
+    Icon: {fileID: 2158054664257976487, guid: 28709775347784d39b781f8464826093, type: 3}
+  - Name: stick
+    Icon: {fileID: 5566781413435318950, guid: 28709775347784d39b781f8464826093, type: 3}
+  - Name: book
+    Icon: {fileID: -8213924653008904286, guid: 28709775347784d39b781f8464826093, type: 3}
+  - Name: bottle
+    Icon: {fileID: -5351195561439543348, guid: 28709775347784d39b781f8464826093, type: 3}
+  - Name: gold
+    Icon: {fileID: 2429189007567579017, guid: 28709775347784d39b781f8464826093, type: 3}
   InitialResource:
     Name: coin
     Amount: 100

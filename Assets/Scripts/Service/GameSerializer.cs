@@ -5,14 +5,6 @@ using Game.Shared;
 
 namespace Game.Service {
 	public sealed class GameSerializer {
-		static readonly string[] ResourceNames = {
-			"coin",
-			"stick",
-			"book",
-			"bottle",
-			"gold"
-		};
-
 		readonly GameConfig _config;
 
 		public GameSerializer(GameConfig config) {
@@ -25,10 +17,11 @@ namespace Game.Service {
 		}
 
 		GameModel Create() {
-			var initResource = _config.InitialResource;
+			var resourceNames = _config.Resources.Select(r => r.Name);
+			var initResource  = _config.InitialResource;
 			return new GameModel {
 				Resources = new ResourcePack {
-					Content = ResourceNames
+					Content = resourceNames
 						.Select(name => {
 							var amount = (initResource.Name == name) ? initResource.Amount : 0;
 							return new ResourceModel {
