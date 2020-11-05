@@ -11,18 +11,20 @@ namespace Game.View {
 		[SerializeField] string      _type;
 		[SerializeField] Transform[] _places;
 
-		UnitView    _unitPrefab;
-		UnitBuyView _placeholder;
+		UnitView     _unitPrefab;
+		UnitBuyView  _placeholder;
+		UnitInfoView _infoView;
 
 		GameViewModel _game;
 
 		List<UnitView> _instances = new List<UnitView>();
 
 		public void Init(
-			GameViewModel game, UnitView unitPrefab, UnitBuyView placeholderPrefab) {
+			GameViewModel game, UnitView unitPrefab, UnitBuyView placeholderPrefab, UnitInfoView infoView) {
 			_game        = game;
 			_unitPrefab  = unitPrefab;
 			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);
+			_infoView    = infoView;
 			game.Units
 				.ObserveAdd()
 				.Where(e => e.Value.Type == _type)
@@ -37,7 +39,7 @@ namespace Game.View {
 			}
 			var instance = UnityEngine.Object.Instantiate(_unitPrefab, place);
 			var unit     = ev.Value;
-			instance.Init(unit);
+			instance.Init(_infoView, unit);
 			_instances.Add(instance);
 			UpdatePlaceholder();
 		}
