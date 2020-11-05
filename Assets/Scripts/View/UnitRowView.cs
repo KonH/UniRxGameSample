@@ -9,20 +9,21 @@ namespace Game.View {
 	[Serializable]
 	public sealed class UnitRowView {
 		[SerializeField] string      _type;
-		[SerializeField] UnitView    _unitPrefab;
 		[SerializeField] Transform[] _places;
 
-		GameViewModel _game;
-
+		UnitView    _unitPrefab;
 		UnitBuyView _placeholder;
+
+		GameViewModel _game;
 
 		List<UnitView> _instances = new List<UnitView>();
 
 		public void Init(
-			UnitBuyView placeholderPrefab, GameViewModel game, ReactiveCollection<UnitViewModel> viewModel) {
-			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);
+			GameViewModel game, UnitView unitPrefab, UnitBuyView placeholderPrefab) {
 			_game        = game;
-			viewModel
+			_unitPrefab  = unitPrefab;
+			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);
+			game.Units
 				.ObserveAdd()
 				.Where(e => e.Value.Type == _type)
 				.Subscribe(OnAddUnit);
@@ -35,6 +36,8 @@ namespace Game.View {
 				return;
 			}
 			var instance = UnityEngine.Object.Instantiate(_unitPrefab, place);
+			var unit     = ev.Value;
+			instance.Init(unit);
 			_instances.Add(instance);
 			UpdatePlaceholder();
 		}

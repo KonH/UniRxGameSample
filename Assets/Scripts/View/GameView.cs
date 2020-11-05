@@ -21,8 +21,7 @@ namespace Game.View {
 			foreach ( var view in _resourceViews ) {
 				view.Init(resources);
 			}
-			var units = viewModel.Units;
-			_unitsView.Init(viewModel, units);
+			_unitsView.Init(viewModel);
 		}
 
 		[ContextMenu("AddResource")]

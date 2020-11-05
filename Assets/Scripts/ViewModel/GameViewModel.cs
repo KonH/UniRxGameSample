@@ -18,7 +18,7 @@ namespace Game.ViewModel {
 			_config   = config;
 			_model    = model;
 			Resources = new ResourcePackViewModel(model.Resources);
-			Units     = new ReactiveCollection<UnitViewModel>(model.Units.Select(m => new UnitViewModel(m)));
+			Units     = new ReactiveCollection<UnitViewModel>(model.Units.Select(CreateViewModel));
 		}
 
 		public void AddUnit(string unitType) {
@@ -26,7 +26,7 @@ namespace Game.ViewModel {
 				Type = unitType
 			};
 			_model.Units.Add(model);
-			Units.Add(new UnitViewModel(model));
+			Units.Add(CreateViewModel(model));
 		}
 
 		public void BuyUnit(string unitType) {
@@ -45,6 +45,8 @@ namespace Game.ViewModel {
 			var unitConfig = GetUnitConfig(unitType);
 			return unitConfig?.Prices[0] ?? new ResourceModel();
 		}
+
+		UnitViewModel CreateViewModel(UnitModel model) => new UnitViewModel(GetUnitConfig(model.Type), model);
 
 		[CanBeNull]
 		UnitConfig GetUnitConfig(string unitType) => _config.Units.Find(u => u.Type == unitType);

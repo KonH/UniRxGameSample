@@ -28,6 +28,10 @@ MonoBehaviour:
     Amount: 100
   Units:
   - Type: wolf
+    Sprites:
+    - {fileID: 976914722759347563, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 6257312724887536951, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 255326994869808317, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
     Prices:
     - Name: coin
       Amount: 50
@@ -36,6 +40,10 @@ MonoBehaviour:
     - Name: book
       Amount: 20
   - Type: cocatrice
+    Sprites:
+    - {fileID: -4658705194732311462, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 2271430137087916446, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: -8300600519577597338, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
     Prices:
     - Name: stick
       Amount: 5
@@ -44,6 +52,10 @@ MonoBehaviour:
     - Name: bottle
       Amount: 20
   - Type: ghost
+    Sprites:
+    - {fileID: 884086625897631271, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 6649693143362401769, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 6649693143362401769, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
     Prices:
     - Name: book
       Amount: 5
@@ -52,6 +64,10 @@ MonoBehaviour:
     - Name: gold
       Amount: 20
   - Type: dragon
+    Sprites:
+    - {fileID: 3220049713106069138, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 9202424225191916221, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
+    - {fileID: 5730899517914627372, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
     Prices:
     - Name: bottle
       Amount: 5

@@ -1,4 +1,6 @@
+using Game.Config;
 using Game.Model;
+using UnityEngine;
 
 namespace Game.ViewModel {
 	public sealed class UnitViewModel {
@@ -6,8 +8,11 @@ namespace Game.ViewModel {
 
 		public string Type => _model.Type;
 
-		public UnitViewModel(UnitModel model) {
+		public Sprite Sprite { get; }
+
+		public UnitViewModel(UnitConfig config, UnitModel model) {
 			_model = model;
+			Sprite = config.Sprites[model.Level];
 		}
 	}
 }

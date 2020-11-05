@@ -3715,33 +3715,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rows:
   - _type: wolf
-    _unitPrefab: {fileID: 4298169057838278953, guid: 9ce46c3fb9f03454ba38b62371eb981b,
-      type: 3}
     _places:
     - {fileID: 197601207}
     - {fileID: 1821739856}
     - {fileID: 89648459}
   - _type: cocatrice
-    _unitPrefab: {fileID: 3717008167786084316, guid: f8190c6f4ffd34700b38042cc0f2b60c,
-      type: 3}
     _places:
     - {fileID: 1766870230}
     - {fileID: 1066169414}
     - {fileID: 1916042326}
   - _type: ghost
-    _unitPrefab: {fileID: 393125555124664075, guid: f14df772d6ad347f799af4a1c69fb6be,
-      type: 3}
     _places:
     - {fileID: 487791487}
     - {fileID: 421275221}
     - {fileID: 2113467651}
   - _type: dragon
-    _unitPrefab: {fileID: 8408356828359146376, guid: 19fb43088a5174363be248ca8988980a,
-      type: 3}
     _places:
     - {fileID: 1960814666}
     - {fileID: 1202779044}
     - {fileID: 1351086897}
+  _unitPrefab: {fileID: 4298169057838278953, guid: 6f8aef0c3a1d3479e9047c7d98dc9baa,
+    type: 3}
   _placeholderPrefab: {fileID: 764277653741834833, guid: 33806b2f411db49d798ef730826527b0,
     type: 3}
 --- !u!1 &1262453821
