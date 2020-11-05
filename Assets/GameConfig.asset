@@ -28,50 +28,118 @@ MonoBehaviour:
     Amount: 100
   Units:
   - Type: wolf
-    Sprites:
-    - {fileID: 976914722759347563, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 6257312724887536951, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 255326994869808317, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    Prices:
-    - Name: coin
-      Amount: 50
-    - Name: stick
-      Amount: 10
-    - Name: book
-      Amount: 20
+    Levels:
+    - Sprite: {fileID: 976914722759347563, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: coin
+        Amount: 50
+      Income:
+        Name: stick
+        Amount: 1
+      IncomeTime: 10
+    - Sprite: {fileID: 6257312724887536951, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: stick
+        Amount: 10
+      Income:
+        Name: stick
+        Amount: 2
+      IncomeTime: 7
+    - Sprite: {fileID: 255326994869808317, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: book
+        Amount: 20
+      Income:
+        Name: stick
+        Amount: 3
+      IncomeTime: 5
   - Type: cocatrice
-    Sprites:
-    - {fileID: -4658705194732311462, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 2271430137087916446, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: -8300600519577597338, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    Prices:
-    - Name: stick
-      Amount: 5
-    - Name: book
-      Amount: 10
-    - Name: bottle
-      Amount: 20
+    Levels:
+    - Sprite: {fileID: -4658705194732311462, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: stick
+        Amount: 5
+      Income:
+        Name: book
+        Amount: 1
+      IncomeTime: 10
+    - Sprite: {fileID: 2271430137087916446, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: book
+        Amount: 100
+      Income:
+        Name: book
+        Amount: 2
+      IncomeTime: 7
+    - Sprite: {fileID: -8300600519577597338, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: bottle
+        Amount: 20
+      Income:
+        Name: book
+        Amount: 3
+      IncomeTime: 5
   - Type: ghost
-    Sprites:
-    - {fileID: 884086625897631271, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 6649693143362401769, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 6649693143362401769, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    Prices:
-    - Name: book
-      Amount: 5
-    - Name: bottle
-      Amount: 10
-    - Name: gold
-      Amount: 20
+    Levels:
+    - Sprite: {fileID: 884086625897631271, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: book
+        Amount: 5
+      Income:
+        Name: bottle
+        Amount: 1
+      IncomeTime: 10
+    - Sprite: {fileID: -2158463599833871999, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: bottle
+        Amount: 10
+      Income:
+        Name: bottle
+        Amount: 2
+      IncomeTime: 7
+    - Sprite: {fileID: 6649693143362401769, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: gold
+        Amount: 20
+      Income:
+        Name: bottle
+        Amount: 3
+      IncomeTime: 5
   - Type: dragon
-    Sprites:
-    - {fileID: 3220049713106069138, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 9202424225191916221, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    - {fileID: 5730899517914627372, guid: 4cd54aba1903c487c828574f4bfdb16c, type: 3}
-    Prices:
-    - Name: bottle
-      Amount: 5
-    - Name: gold
-      Amount: 10
-    - Name: coin
-      Amount: 10000
+    Levels:
+    - Sprite: {fileID: 3220049713106069138, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: bottle
+        Amount: 5
+      Income:
+        Name: gold
+        Amount: 1
+      IncomeTime: 10
+    - Sprite: {fileID: 9202424225191916221, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: gold
+        Amount: 10
+      Income:
+        Name: gold
+        Amount: 2
+      IncomeTime: 7
+    - Sprite: {fileID: 5730899517914627372, guid: 4cd54aba1903c487c828574f4bfdb16c,
+        type: 3}
+      Price:
+        Name: coin
+        Amount: 1000
+      Income:
+        Name: gold
+        Amount: 3
+      IncomeTime: 5

@@ -8,10 +8,12 @@ namespace Game.View {
 		[SerializeField] Image  _image;
 		[SerializeField] Button _button;
 
+		GameViewModel _game;
 		UnitInfoView  _infoView;
 		UnitViewModel _viewModel;
 
-		public void Init(UnitInfoView infoView, UnitViewModel viewModel) {
+		public void Init(GameViewModel game, UnitInfoView infoView, UnitViewModel viewModel) {
+			_game         = game;
 			_infoView     = infoView;
 			_viewModel    = viewModel;
 			_image.sprite = viewModel.Sprite;
@@ -20,6 +22,10 @@ namespace Game.View {
 		}
 
 		void OnClick() {
+			if ( !_viewModel.Income.IsEmpty ) {
+				_game.Collect(_viewModel);
+				return;
+			}
 			_infoView.Init(_viewModel);
 		}
 	}

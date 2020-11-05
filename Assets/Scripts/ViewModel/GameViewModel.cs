@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Game.Config;
 using Game.Model;
@@ -19,6 +20,29 @@ namespace Game.ViewModel {
 			_model    = model;
 			Resources = new ResourcePackViewModel(model.Resources);
 			Units     = new ReactiveCollection<UnitViewModel>(model.Units.Select(CreateViewModel));
+		}
+
+		public void Update() {
+			var now = DateTimeOffset.UtcNow;
+			foreach ( var unit in Units ) {
+				var config = GetUnitConfig(unit.Type);
+				if ( config == null ) {
+					continue;
+				}
+				var level      = config.Levels[unit.Level];
+				var updateTime = level.IncomeTime;
+				var income     = level.Income;
+				var interval   = (now - unit.LastIncomeTime);
+				while ( interval.TotalSeconds > updateTime ) {
+					unit.AddIncome(income, now);
+					interval = interval.Subtract(TimeSpan.FromSeconds(updateTime));
+				}
+			}
+		}
+
+		public void Collect(UnitViewModel unit) {
+			var income = unit.Income.Take();
+			Resources.Add(income);
 		}
 
 		public void AddUnit(string unitType) {
@@ -43,7 +67,7 @@ namespace Game.ViewModel {
 
 		public ResourceModel GetBuyPrice(string unitType) {
 			var unitConfig = GetUnitConfig(unitType);
-			return unitConfig?.Prices[0] ?? new ResourceModel();
+			return unitConfig?.Levels[0].Price ?? new ResourceModel();
 		}
 
 		UnitViewModel CreateViewModel(UnitModel model) => new UnitViewModel(GetUnitConfig(model.Type), model);

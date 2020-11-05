@@ -39,7 +39,7 @@ namespace Game.View {
 			}
 			var instance = UnityEngine.Object.Instantiate(_unitPrefab, place);
 			var unit     = ev.Value;
-			instance.Init(_infoView, unit);
+			instance.Init(_game, _infoView, unit);
 			_instances.Add(instance);
 			UpdatePlaceholder();
 		}
