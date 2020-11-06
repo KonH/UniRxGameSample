@@ -25,7 +25,7 @@ MonoBehaviour:
     Icon: {fileID: 2429189007567579017, guid: 28709775347784d39b781f8464826093, type: 3}
   InitialResource:
     Name: coin
-    Amount: 100
+    Amount: 150
   Units:
   - Type: wolf
     Levels:
