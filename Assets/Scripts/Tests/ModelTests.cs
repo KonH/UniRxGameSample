@@ -9,11 +9,8 @@ namespace Game.Tests {
 	public sealed class ModelTests {
 		[Test]
 		public void IsResourcesSerialized() {
-			var sourceGame = new GameModel();
-			sourceGame.Resources.Content.Add(new ResourceModel {
-				Name = "ResourceName",
-				Amount = 100
-			});
+			var resources  = new ResourcePack(new ResourceModel("ResourceName", 100));
+			var sourceGame = new GameModel(resources, Array.Empty<UnitModel>());
 			var targetGame = Serialize(sourceGame);
 
 			var source = sourceGame.Resources.Content;
@@ -24,20 +21,14 @@ namespace Game.Tests {
 
 		[Test]
 		public void IsUnitsSerialized() {
-			var sourceGame = new GameModel();
-			sourceGame.Units.Add(new UnitModel {
-				Type = "UnitType",
-				Level = 3,
-				LastIncomeTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-				Income = new ResourcePack {
-					Content = new List<ResourceModel> {
-						new ResourceModel {
-							Name   = "ResourceName",
-							Amount = 100
-						}
-					}
-				}
-			});
+			var units = new List<UnitModel> {
+				new UnitModel(
+					"UnitType",
+					3,
+					DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+					new ResourcePack(new ResourceModel("ResourceName", 100)))
+			};
+			var sourceGame = new GameModel(new ResourcePack(Array.Empty<ResourceModel>()), units);
 			var targetGame = Serialize(sourceGame);
 
 			var source = sourceGame.Units;

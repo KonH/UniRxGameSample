@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Game.Shared;
 using UniRx;
@@ -7,37 +6,40 @@ namespace Game.ViewModel {
 	public sealed class ResourcePackViewModel {
 		readonly ResourcePack _model;
 
-		readonly Dictionary<string, ReactiveProperty<long>> _resources;
+		public readonly ReactiveDictionary<string, ReactiveProperty<long>> Resources;
 
-		public IReadOnlyDictionary<string, ReactiveProperty<long>> Resources => _resources;
-
-		public bool IsEmpty => (_resources.Count == 0) || _resources.All(r => r.Value.Value == 0);
+		public bool IsEmpty => (Resources.Count == 0) || Resources.All(r => r.Value.Value == 0);
 
 		public ResourcePackViewModel(ResourcePack model) {
 			_model = model;
-			_resources = _model.Content
-				.ToDictionary(r => r.Name, CreateResourceProperty);
+			Resources = new ReactiveDictionary<string, ReactiveProperty<long>>(
+				_model.Content
+					.ToDictionary(r => r.Name, CreateResourceProperty));
 		}
 
-		internal Dictionary<string, long> Take() =>
-			_resources
-				.ToDictionary(p => p.Key, p => Take(p.Key));
+		internal ResourcePack Take() =>
+			new ResourcePack(Resources.Select(r => Take(r.Key)));
 
-		internal long Take(string name) {
-			var property = _resources[name];
+		internal ResourceModel Take(string name) {
+			var property = Resources[name];
 			var amount = property.Value;
 			property.Value = 0;
-			return amount;
+			return new ResourceModel(name, amount);
 		}
 
-		internal void Add(Dictionary<string, long> resources) {
-			foreach ( var pair in resources ) {
-				Add(pair.Key, pair.Value);
+		internal void Add(ResourcePack pack) {
+			foreach ( var pair in pack.Content ) {
+				Add(pair.Name, pair.Amount);
 			}
 		}
 
 		internal void Add(string name, long amount) {
-			var property = _resources[name];
+			if ( !Resources.TryGetValue(name, out var property) ) {
+				var model = new ResourceModel(name, amount);
+				_model.Content.Add(model);
+				property = CreateResourceProperty(model);
+				Resources.Add(name, property);
+			}
 			property.Value += amount;
 		}
 

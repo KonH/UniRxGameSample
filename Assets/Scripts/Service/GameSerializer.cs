@@ -20,17 +20,15 @@ namespace Game.Service {
 			var resourceNames = _config.Resources.Select(r => r.Name);
 			var initResource  = _config.InitialResource;
 			return new GameModel {
-				Resources = new ResourcePack {
-					Content = resourceNames
+				Resources = new ResourcePack(
+					resourceNames
 						.Select(name => {
 							var amount = (initResource.Name == name) ? initResource.Amount : 0;
 							return new ResourceModel {
 								Name   = name,
 								Amount = amount
 							};
-						})
-						.ToList()
-				}
+						}))
 			};
 		}
 

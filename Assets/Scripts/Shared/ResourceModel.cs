@@ -6,6 +6,13 @@ namespace Game.Shared {
 		public string Name;
 		public long   Amount;
 
+		public ResourceModel() {}
+
+		public ResourceModel(string name, long amount) {
+			Name   = name;
+			Amount = amount;
+		}
+
 		public bool Equals(ResourceModel other) => (Name == other?.Name) && (Amount == other?.Amount);
 
 		public override bool Equals(object obj) =>

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Game.Model;
+using System.Linq;
 using Game.Shared;
 
 namespace Game.Model {
@@ -8,5 +8,12 @@ namespace Game.Model {
 	public sealed class GameModel {
 		public ResourcePack    Resources = new ResourcePack();
 		public List<UnitModel> Units     = new List<UnitModel>();
+
+		public GameModel() {}
+
+		public GameModel(ResourcePack resources, IEnumerable<UnitModel> units) {
+			Resources = resources;
+			Units     = units.ToList();
+		}
 	}
 }

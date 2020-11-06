@@ -8,5 +8,14 @@ namespace Game.Model {
 		public int          Level;
 		public long         LastIncomeTime;
 		public ResourcePack Income;
+
+		public UnitModel() {}
+
+		public UnitModel(string type, int level, long lastIncomeTime, ResourcePack income) {
+			Type           = type;
+			Level          = level;
+			LastIncomeTime = lastIncomeTime;
+			Income         = income;
+		}
 	}
 }

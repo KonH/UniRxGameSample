@@ -24,6 +24,10 @@ namespace Game.View {
 			_unitsView.Init(viewModel);
 		}
 
+		void Update() {
+			_serializable.ViewModel.Update();
+		}
+
 		[ContextMenu("AddResource")]
 		public void AddResource() {
 			var resources = _serializable.ViewModel.Resources.Resources;
