@@ -137,8 +137,8 @@ MonoBehaviour:
     - Sprite: {fileID: 5730899517914627372, guid: 4cd54aba1903c487c828574f4bfdb16c,
         type: 3}
       Price:
-        Name: coin
-        Amount: 1000
+        Name: gold
+        Amount: 30
       Income:
         Name: gold
         Amount: 3
