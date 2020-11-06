@@ -10,9 +10,7 @@ namespace Game.View {
 
 		SerializableGameViewModel _serializable;
 
-		void Awake() {
-			Init();
-		}
+		void Awake() => Init();
 
 		void Init() {
 			_serializable = new SerializableGameViewModel(_config);
@@ -24,34 +22,6 @@ namespace Game.View {
 			_unitsView.Init(viewModel);
 		}
 
-		void Update() {
-			_serializable.ViewModel.Update();
-		}
-
-		[ContextMenu("AddResource")]
-		public void AddResource() {
-			var resources = _serializable.ViewModel.Resources.Resources;
-			var x = 0;
-			foreach ( var pair in resources ) {
-				x++;
-				pair.Value.Value += x;
-			}
-		}
-
-		[ContextMenu("AddUnit")]
-		public void AddUnit() {
-			var type = GetNextUnitType();
-			_serializable.ViewModel.AddUnit(type);
-		}
-
-		string GetNextUnitType() {
-			switch ( _serializable.ViewModel.Units.Count % 4 ) {
-				case 0: return "wolf";
-				case 1: return "cocatrice";
-				case 2: return "ghost";
-				case 3: return "dragon";
-			}
-			return string.Empty;
-		}
+		void Update() => _serializable.ViewModel.Update();
 	}
 }

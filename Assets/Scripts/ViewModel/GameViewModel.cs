@@ -33,7 +33,7 @@ namespace Game.ViewModel {
 				var updateTime = level.IncomeTime;
 				var interval   = (now - unit.LastIncomeTime);
 				while ( interval.TotalSeconds > updateTime ) {
-					var income = level.Income;
+					var income = level.Income.Amount;
 					unit.AddIncome(income, now);
 					interval = interval.Subtract(TimeSpan.FromSeconds(updateTime));
 				}
@@ -41,7 +41,7 @@ namespace Game.ViewModel {
 		}
 
 		public void Collect(UnitViewModel unit) {
-			var income = unit.Income.Take();
+			var income = unit.Income.TakeAll();
 			Resources.Add(income);
 		}
 
@@ -52,14 +52,14 @@ namespace Game.ViewModel {
 			}
 			var now        = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 			var incomeType = config.Levels[0].Income.Name;
-			var model      = new UnitModel(unitType, 0, now, new ResourcePack(new ResourceModel(incomeType, 0)));
+			var model      = new UnitModel(unitType, 0, now, new ResourceModel(incomeType, 0));
 			_model.Units.Add(model);
 			Units.Add(CreateViewModel(model));
 		}
 
 		public void BuyUnit(string unitType) {
 			var price = GetBuyPrice(unitType);
-			Resources.Resources[price.Name].Value -= price.Amount;
+			Resources.Resources[price.Name].Take(price.Amount);
 			AddUnit(unitType);
 		}
 

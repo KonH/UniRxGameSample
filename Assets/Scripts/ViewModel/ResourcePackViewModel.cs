@@ -6,53 +6,46 @@ namespace Game.ViewModel {
 	public sealed class ResourcePackViewModel {
 		readonly ResourcePack _model;
 
-		public readonly ReactiveDictionary<string, ReactiveProperty<long>> Resources;
+		public readonly ReactiveDictionary<string, ResourceViewModel> Resources;
 
-		public bool IsEmpty => (Resources.Count == 0) || Resources.All(r => r.Value.Value == 0);
+		public bool IsEmpty => (Resources.Count == 0) || Resources.All(r => r.Value.IsEmpty);
 
 		public ResourcePackViewModel(ResourcePack model) {
 			_model = model;
-			Resources = new ReactiveDictionary<string, ReactiveProperty<long>>(
+			Resources = new ReactiveDictionary<string, ResourceViewModel>(
 				_model.Content
-					.ToDictionary(r => r.Name, CreateResourceProperty));
+					.ToDictionary(r => r.Name, CreateResourceViewModel));
 		}
 
 		internal ResourcePack Take() =>
 			new ResourcePack(Resources.Select(r => Take(r.Key)));
 
 		internal ResourceModel Take(string name) {
-			var property = Resources[name];
-			var amount = property.Value;
-			property.Value = 0;
+			var viewModel = Resources[name];
+			var amount    = viewModel.Amount.Value;
+			viewModel.Take(viewModel.Amount.Value);
 			return new ResourceModel(name, amount);
 		}
 
 		internal void Add(ResourcePack pack) {
-			foreach ( var pair in pack.Content ) {
-				Add(pair.Name, pair.Amount);
+			foreach ( var model in pack.Content ) {
+				Add(model);
 			}
 		}
+
+		internal void Add(ResourceModel model) => Add(model.Name, model.Amount);
 
 		internal void Add(string name, long amount) {
-			if ( !Resources.TryGetValue(name, out var property) ) {
-				var model = new ResourceModel(name, amount);
+			if ( !Resources.TryGetValue(name, out var viewModel) ) {
+				var model = new ResourceModel(name, 0);
 				_model.Content.Add(model);
-				property = CreateResourceProperty(model);
-				Resources.Add(name, property);
+				viewModel = CreateResourceViewModel(model);
+				Resources.Add(name, viewModel);
 			}
-			property.Value += amount;
+			viewModel.Add(amount);
 		}
 
-		ReactiveProperty<long> CreateResourceProperty(ResourceModel model) {
-			var property = new ReactiveProperty<long>(model.Amount);
-			property
-				.Subscribe(newAmount => OnValueChanged(model.Name, newAmount));
-			return property;
-		}
-
-		void OnValueChanged(string name, long newAmount) {
-			var model = _model.Content.Find(m => m.Name == name);
-			model.Amount = newAmount;
-		}
+		ResourceViewModel CreateResourceViewModel(ResourceModel model) =>
+			new ResourceViewModel(model);
 	}
 }

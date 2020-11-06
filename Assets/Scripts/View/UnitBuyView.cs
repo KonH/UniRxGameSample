@@ -1,5 +1,3 @@
-using System;
-using Game.Shared;
 using Game.ViewModel;
 using TMPro;
 using UniRx;
@@ -29,7 +27,7 @@ namespace Game.View {
 			_disposables?.Dispose();
 			_disposables = new CompositeDisposable();
 			var requiredResource = resources.Resources[price.Name];
-			requiredResource
+			requiredResource.Amount
 				.Subscribe(UpdateAvailability)
 				.AddTo(_disposables);
 			_button.onClick

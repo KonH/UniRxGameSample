@@ -26,7 +26,7 @@ namespace Game.Tests {
 					"UnitType",
 					3,
 					DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-					new ResourcePack(new ResourceModel("ResourceName", 100)))
+					new ResourceModel("ResourceName", 100))
 			};
 			var sourceGame = new GameModel(new ResourcePack(Array.Empty<ResourceModel>()), units);
 			var targetGame = Serialize(sourceGame);

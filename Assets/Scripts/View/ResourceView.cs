@@ -12,11 +12,11 @@ namespace Game.View {
 
 		long _lastAmount;
 
-		public void Init(ResourcePackViewModel viewModel) {
-			var property = viewModel.Resources[_name];
-			UpdateValue(property.Value);
+		public void Init(ResourcePackViewModel packViewModel) {
+			var viewModel = packViewModel.Resources[_name];
+			UpdateValue(viewModel.Amount.Value);
 			StopAppear();
-			property
+			viewModel.Amount
 				.Skip(1)
 				.Do(StartAppear)
 				.Delay(TimeSpan.FromSeconds(0.75))

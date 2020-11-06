@@ -1,4 +1,3 @@
-using System.Linq;
 using Game.ViewModel;
 using TMPro;
 using UniRx;
@@ -10,12 +9,9 @@ namespace Game.View {
 		[SerializeField] TMP_Text _text;
 		[SerializeField] Image    _image;
 
-		public void Init(GameViewModel game, ResourcePackViewModel viewModel) {
-			var pair     = viewModel.Resources.First();
-			var resource = pair.Key;
-			var property = pair.Value;
-			_image.sprite = game.GetResourceIcon(resource);
-			property
+		public void Init(GameViewModel game, ResourceViewModel viewModel) {
+			_image.sprite = game.GetResourceIcon(viewModel.Name);
+			viewModel.Amount
 				.Subscribe(UpdateValue);
 		}
 
