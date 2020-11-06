@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Game.Config;
 using Game.Model;
+using Game.Service;
 using Game.Shared;
 using JetBrains.Annotations;
 using UniRx;
@@ -12,23 +13,26 @@ namespace Game.ViewModel {
 		readonly GameConfig _config;
 		readonly GameModel  _model;
 
+		public readonly TimeProvider                      Time;
 		public readonly ResourcePackViewModel             Resources;
 		public readonly ReactiveCollection<UnitViewModel> Units;
 
 		public GameViewModel(GameConfig config, GameModel model) {
 			_config   = config;
 			_model    = model;
+			Time      = new TimeProvider();
 			Resources = new ResourcePackViewModel(model.Resources);
 			Units     = new ReactiveCollection<UnitViewModel>(model.Units.Select(CreateViewModel));
 		}
 
 		public void Update() {
-			var now = DateTimeOffset.UtcNow;
+			Time.Update();
 			foreach ( var unit in Units ) {
 				var config = GetUnitConfig(unit.Type);
 				if ( config == null ) {
 					continue;
 				}
+				var now        = Time.Now;
 				var level      = config.Levels[unit.Level.Value];
 				var updateTime = level.IncomeTime;
 				var interval   = (now - unit.LastIncomeTime);
@@ -50,7 +54,7 @@ namespace Game.ViewModel {
 			if ( config == null ) {
 				return;
 			}
-			var now        = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+			var now        = Time.Now.ToUnixTimeMilliseconds();
 			var incomeType = config.Levels[0].Income.Name;
 			var model      = new UnitModel(unitType, 0, now, new ResourceModel(incomeType, 0));
 			_model.Units.Add(model);
