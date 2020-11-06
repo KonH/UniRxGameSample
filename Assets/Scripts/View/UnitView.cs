@@ -17,7 +17,8 @@ namespace Game.View {
 			_game         = game;
 			_infoView     = infoView;
 			_viewModel    = viewModel;
-			_image.sprite = viewModel.Sprite;
+			viewModel.Sprite
+				.Subscribe(s => _image.sprite = s);
 			_button.onClick.AsObservable()
 				.Subscribe(_ => OnClick());
 			_incomeView.Init(game, viewModel.Income);

@@ -18,8 +18,10 @@ namespace Game.View {
 			_closeButton.onClick.AsObservable()
 				.Subscribe(_ => OnCloseClick())
 				.AddTo(_disposables);
-			_unitImage.sprite = viewModel.Sprite;
-			_unitText.text    = viewModel.Type;
+			_unitText.text = viewModel.Type;
+			viewModel.Sprite
+				.Subscribe(s => _unitImage.sprite = s)
+				.AddTo(_disposables);
 			Show();
 		}
 

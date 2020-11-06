@@ -29,7 +29,7 @@ namespace Game.ViewModel {
 				if ( config == null ) {
 					continue;
 				}
-				var level      = config.Levels[unit.Level];
+				var level      = config.Levels[unit.Level.Value];
 				var updateTime = level.IncomeTime;
 				var interval   = (now - unit.LastIncomeTime);
 				while ( interval.TotalSeconds > updateTime ) {
