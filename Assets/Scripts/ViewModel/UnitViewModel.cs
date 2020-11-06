@@ -24,7 +24,9 @@ namespace Game.ViewModel {
 			Sprite  = new ReactiveProperty<Sprite>();
 			Level   = new ReactiveProperty<int>(_model.Level);
 			Income  = new ResourcePackViewModel(model.Income);
-			Level.Subscribe(UpdateSprite);
+			Level
+				.Do(l => _model.Level = l)
+				.Subscribe(UpdateSprite);
 		}
 
 		public void AddIncome(ResourceModel resource, DateTimeOffset time) {
