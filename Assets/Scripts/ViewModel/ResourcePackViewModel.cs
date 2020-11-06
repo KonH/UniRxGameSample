@@ -14,13 +14,13 @@ namespace Game.ViewModel {
 			_model = model;
 			Resources = new ReactiveDictionary<string, ResourceViewModel>(
 				_model.Content
-					.ToDictionary(r => r.Name, CreateResourceViewModel));
+					.ToDictionary(r => r.Name, r => new ResourceViewModel(r)));
 		}
 
-		internal ResourcePack Take() =>
-			new ResourcePack(Resources.Select(r => Take(r.Key)));
+		internal ResourcePack TakeAll() =>
+			new ResourcePack(Resources.Select(r => TakeAll(r.Key)));
 
-		internal ResourceModel Take(string name) {
+		internal ResourceModel TakeAll(string name) {
 			var viewModel = Resources[name];
 			var amount    = viewModel.Amount.Value;
 			viewModel.Take(viewModel.Amount.Value);
@@ -39,13 +39,10 @@ namespace Game.ViewModel {
 			if ( !Resources.TryGetValue(name, out var viewModel) ) {
 				var model = new ResourceModel(name, 0);
 				_model.Content.Add(model);
-				viewModel = CreateResourceViewModel(model);
+				viewModel = new ResourceViewModel(model);
 				Resources.Add(name, viewModel);
 			}
 			viewModel.Add(amount);
 		}
-
-		ResourceViewModel CreateResourceViewModel(ResourceModel model) =>
-			new ResourceViewModel(model);
 	}
 }

@@ -561,7 +561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &126177963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1267,6 +1267,7 @@ MonoBehaviour:
   _unitImage: {fileID: 607496887}
   _unitText: {fileID: 12948676}
   _closeButton: {fileID: 2033770621}
+  _upgradeView: {fileID: 374941954}
 --- !u!1 &312872958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,13 +1449,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374941953}
+  - component: {fileID: 374941954}
   m_Layer: 5
   m_Name: UpgradeView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &374941953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1478,6 +1480,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &374941954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374941952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9213d884107f4fbdbcbf0a43153cf1d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _view: {fileID: 1066040588}
+  _button: {fileID: 1268738790}
 --- !u!1 &405192662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3197,6 +3213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1066040587}
+  - component: {fileID: 1066040588}
   m_Layer: 5
   m_Name: PriceHolder
   m_TagString: Untagged
@@ -3225,6 +3242,20 @@ RectTransform:
   m_AnchoredPosition: {x: 125, y: -200}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1066040588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066040586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b6608dbc0643d29d553411a85deb42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 713318728}
+  _text: {fileID: 1358019141}
 --- !u!1 &1066169413
 GameObject:
   m_ObjectHideFlags: 0

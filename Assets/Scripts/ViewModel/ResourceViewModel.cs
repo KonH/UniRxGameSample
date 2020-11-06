@@ -26,5 +26,7 @@ namespace Game.ViewModel {
 		}
 
 		public ResourceModel TakeAll() => Take(Amount.Value);
+
+		public bool IsEnough(long amount) => Amount.Value >= amount;
 	}
 }

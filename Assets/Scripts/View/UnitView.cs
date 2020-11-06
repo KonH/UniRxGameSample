@@ -29,7 +29,7 @@ namespace Game.View {
 				_game.Collect(_viewModel);
 				return;
 			}
-			_infoView.Init(_viewModel);
+			_infoView.Init(_game, _viewModel);
 		}
 	}
 }

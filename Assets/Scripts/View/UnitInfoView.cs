@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 namespace Game.View {
 	public sealed class UnitInfoView : MonoBehaviour {
-		[SerializeField] Image    _unitImage;
-		[SerializeField] TMP_Text _unitText;
-		[SerializeField] Button   _closeButton;
+		[SerializeField] Image       _unitImage;
+		[SerializeField] TMP_Text    _unitText;
+		[SerializeField] Button      _closeButton;
+		[SerializeField] UpgradeView _upgradeView;
 
 		CompositeDisposable _disposables;
 
-		public void Init(UnitViewModel viewModel) {
+		public void Init(GameViewModel game, UnitViewModel viewModel) {
 			_disposables?.Dispose();
 			_disposables = new CompositeDisposable();
 			_closeButton.onClick.AsObservable()
@@ -22,6 +23,7 @@ namespace Game.View {
 			viewModel.Sprite
 				.Subscribe(s => _unitImage.sprite = s)
 				.AddTo(_disposables);
+			_upgradeView.Init(game, viewModel);
 			Show();
 		}
 

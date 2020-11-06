@@ -74,9 +74,15 @@ namespace Game.ViewModel {
 			return unitConfig?.Levels[0].Price ?? new ResourceModel(string.Empty, 0);
 		}
 
-		UnitViewModel CreateViewModel(UnitModel model) => new UnitViewModel(GetUnitConfig(model.Type), model);
+		UnitViewModel CreateViewModel(UnitModel model) => new UnitViewModel(GetUnitConfig(model.Type), model, Resources);
 
 		[CanBeNull]
 		UnitConfig GetUnitConfig(string unitType) => _config.Units.Find(u => u.Type == unitType);
+
+		public void UpgradeUnit(UnitViewModel unit) {
+			var upgradePrice = unit.UpgradePrice.Value;
+			Resources.Resources[upgradePrice.Name].Take(upgradePrice.Amount.Value);
+			unit.Level.Value++;
+		}
 	}
 }
