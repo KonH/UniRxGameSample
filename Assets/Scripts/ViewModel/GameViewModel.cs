@@ -46,8 +46,13 @@ namespace Game.ViewModel {
 		}
 
 		public void AddUnit(string unitType) {
-			var now   = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-			var model = new UnitModel(unitType, 0, now, new ResourcePack(Array.Empty<ResourceModel>()));
+			var config = GetUnitConfig(unitType);
+			if ( config == null ) {
+				return;
+			}
+			var now        = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+			var incomeType = config.Levels[0].Income.Name;
+			var model      = new UnitModel(unitType, 0, now, new ResourcePack(new ResourceModel(incomeType, 0)));
 			_model.Units.Add(model);
 			Units.Add(CreateViewModel(model));
 		}
