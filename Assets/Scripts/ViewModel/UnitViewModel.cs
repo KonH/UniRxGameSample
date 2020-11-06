@@ -67,6 +67,7 @@ namespace Game.ViewModel {
 		void OnLevelUpdated(int level) {
 			UpdateSprite(level);
 			UpdateUpgradePrice();
+			CanUpgrade.Value = IsUpgradeAvailable();
 		}
 
 		void UpdateSprite(int level) => Sprite.Value = _config.Levels[level].Sprite;

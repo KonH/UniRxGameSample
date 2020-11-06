@@ -77,7 +77,7 @@ namespace Game.ViewModel {
 		UnitViewModel CreateViewModel(UnitModel model) => new UnitViewModel(GetUnitConfig(model.Type), model, Resources);
 
 		[CanBeNull]
-		UnitConfig GetUnitConfig(string unitType) => _config.Units.Find(u => u.Type == unitType);
+		public UnitConfig GetUnitConfig(string unitType) => _config.Units.Find(u => u.Type == unitType);
 
 		public void UpgradeUnit(UnitViewModel unit) {
 			var upgradePrice = unit.UpgradePrice.Value;

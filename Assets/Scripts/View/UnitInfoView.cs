@@ -10,6 +10,7 @@ namespace Game.View {
 		[SerializeField] TMP_Text    _unitText;
 		[SerializeField] Button      _closeButton;
 		[SerializeField] UpgradeView _upgradeView;
+		[SerializeField] StatView[]  _statViews;
 
 		CompositeDisposable _disposables;
 
@@ -24,6 +25,9 @@ namespace Game.View {
 				.Subscribe(s => _unitImage.sprite = s)
 				.AddTo(_disposables);
 			_upgradeView.Init(game, viewModel);
+			foreach ( var statView in _statViews ) {
+				statView.Init(game, viewModel);
+			}
 			Show();
 		}
 
