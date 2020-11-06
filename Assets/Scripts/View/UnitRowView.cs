@@ -25,20 +25,24 @@ namespace Game.View {
 			_unitPrefab  = unitPrefab;
 			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);
 			_infoView    = infoView;
+			foreach ( var unit in game.Units ) {
+				if ( unit.Type == _type ) {
+					OnAddUnit(unit);
+				}
+			}
 			game.Units
 				.ObserveAdd()
 				.Where(e => e.Value.Type == _type)
-				.Subscribe(OnAddUnit);
+				.Subscribe(e => OnAddUnit(e.Value));
 			UpdatePlaceholder();
 		}
 
-		void OnAddUnit(CollectionAddEvent<UnitViewModel> ev) {
+		void OnAddUnit(UnitViewModel unit) {
 			var place = TryGetNextPlace();
 			if ( place == null ) {
 				return;
 			}
 			var instance = UnityEngine.Object.Instantiate(_unitPrefab, place);
-			var unit     = ev.Value;
 			instance.Init(_game, _infoView, unit);
 			_instances.Add(instance);
 			UpdatePlaceholder();
