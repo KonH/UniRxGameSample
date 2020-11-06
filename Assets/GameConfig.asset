@@ -71,7 +71,7 @@ MonoBehaviour:
         type: 3}
       Price:
         Name: book
-        Amount: 100
+        Amount: 10
       Income:
         Name: book
         Amount: 2
