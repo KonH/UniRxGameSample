@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Game.Config;
 using Game.Model;
 using Game.Shared;
+using UnityEngine;
 
 namespace Game.Service {
 	public sealed class GameSerializer {
@@ -12,8 +14,16 @@ namespace Game.Service {
 		}
 
 		public GameModel LoadOrCreate() {
-			// TODO: load
+			var path = GetPath();
+			if ( File.Exists(path) ) {
+				return Load(path);
+			}
 			return Create();
+		}
+
+		GameModel Load(string path) {
+			var json = File.ReadAllText(path);
+			return JsonUtility.FromJson<GameModel>(json);
 		}
 
 		GameModel Create() {
@@ -33,7 +43,11 @@ namespace Game.Service {
 		}
 
 		public void Save(GameModel model) {
-			// TODO: impl & usages
+			var path = GetPath();
+			var json = JsonUtility.ToJson(model);
+			File.WriteAllText(path, json);
 		}
+
+		string GetPath() => $"{Application.persistentDataPath}/save.json";
 	}
 }

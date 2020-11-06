@@ -11,7 +11,8 @@ using UnityEngine;
 namespace Game.ViewModel {
 	public sealed class GameViewModel {
 		readonly GameConfig _config;
-		readonly GameModel  _model;
+
+		public GameModel Model { get; }
 
 		public readonly TimeProvider                      Time;
 		public readonly ResourcePackViewModel             Resources;
@@ -19,7 +20,7 @@ namespace Game.ViewModel {
 
 		public GameViewModel(GameConfig config, GameModel model) {
 			_config   = config;
-			_model    = model;
+			Model     = model;
 			Time      = new TimeProvider();
 			Resources = new ResourcePackViewModel(model.Resources);
 			Units     = new ReactiveCollection<UnitViewModel>(model.Units.Select(CreateViewModel));
@@ -57,7 +58,7 @@ namespace Game.ViewModel {
 			var now        = Time.Now.ToUnixTimeMilliseconds();
 			var incomeType = config.Levels[0].Income.Name;
 			var model      = new UnitModel(unitType, 0, now, new ResourceModel(incomeType, 0));
-			_model.Units.Add(model);
+			Model.Units.Add(model);
 			Units.Add(CreateViewModel(model));
 		}
 

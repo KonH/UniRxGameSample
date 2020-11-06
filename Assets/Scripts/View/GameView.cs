@@ -23,5 +23,7 @@ namespace Game.View {
 		}
 
 		void Update() => _serializable.ViewModel.Update();
+
+		void OnApplicationQuit() => _serializable.Save();
 	}
 }
