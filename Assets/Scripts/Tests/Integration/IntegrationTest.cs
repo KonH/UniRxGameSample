@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 namespace Tests.Integration {
 	public abstract class IntegrationTest {
-		protected GameView    GameView => Object.FindObjectOfType<GameView>();
+		protected GameView GameView => Object.FindObjectOfType<GameView>();
 
 		protected void Prepare() {
 			GameView.UseSerialization = false;
@@ -15,5 +15,15 @@ namespace Tests.Integration {
 		protected UnitBuyView GetBuyView(string type) =>
 			Object.FindObjectsOfType<UnitBuyView>()
 				.First(v => v.UnitType == type);
+
+		protected UnitView GetUnitView(string type, int index) =>
+			Object.FindObjectsOfType<UnitView>()
+				.Where(v => v.ViewModel.Type == type)
+				.Skip(index)
+				.First();
+
+		protected UnitInfoView GetUnitInfoView() => Object.FindObjectOfType<UnitInfoView>();
+
+		protected UpgradeView GetUpgradeView() => Object.FindObjectOfType<UpgradeView>();
 	}
 }
