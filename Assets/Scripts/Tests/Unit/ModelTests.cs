@@ -5,7 +5,7 @@ using Game.Shared;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Game.Tests {
+namespace Game.Tests.Unit {
 	public sealed class ModelTests {
 		[Test]
 		public void IsResourcesSerialized() {
