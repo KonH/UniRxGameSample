@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
@@ -42,6 +43,28 @@ namespace Tests.Integration {
 			upgradeButton.onClick.Invoke();
 
 			Assert.AreEqual(1, unitView.ViewModel.Level.Value);
+		}
+
+		[UnityTest]
+		public IEnumerator IsUnitUpgradedWithResources() {
+			Prepare();
+			yield return null;
+
+			var buyButton = GetBuyView("wolf").GetComponentInChildren<Button>();
+			buyButton.onClick.Invoke();
+
+			var unitView = GetUnitView("wolf", 0);
+			GameView.ViewModel.Resources.Add(unitView.ViewModel.UpgradePrice.Value.Model);
+			yield return new WaitForSeconds(3);
+			var unitButton = unitView.GetComponentInChildren<Button>();
+			unitButton.onClick.Invoke();
+
+			var upgradeView   = GetUpgradeView();
+			var upgradeButton = upgradeView.GetComponentInChildren<Button>();
+			upgradeButton.onClick.Invoke();
+			yield return new WaitForSeconds(3);
+
+			Assert.AreEqual("0", GetStickCounter());
 		}
 
 		[UnityTest]

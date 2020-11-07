@@ -1,5 +1,6 @@
 using System.Linq;
 using Game.View;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,5 +26,8 @@ namespace Tests.Integration {
 		protected UnitInfoView GetUnitInfoView() => Object.FindObjectOfType<UnitInfoView>();
 
 		protected UpgradeView GetUpgradeView() => Object.FindObjectOfType<UpgradeView>();
+
+		protected string GetCoinCounter() => GameObject.Find("CoinResourceCounter").GetComponent<TMP_Text>().text;
+		protected string GetStickCounter() => GameObject.Find("StickResourceCounter").GetComponent<TMP_Text>().text;
 	}
 }

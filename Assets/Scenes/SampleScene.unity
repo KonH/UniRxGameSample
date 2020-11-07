@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 312872959}
   - component: {fileID: 312872960}
   m_Layer: 5
-  m_Name: CoinsHolder
+  m_Name: CoinHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2273,7 +2273,7 @@ GameObject:
   - component: {fileID: 1185071280}
   - component: {fileID: 1185071279}
   m_Layer: 5
-  m_Name: ResourceCounter
+  m_Name: BottleResourceCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2834,7 +2834,7 @@ GameObject:
   - component: {fileID: 1342279442}
   - component: {fileID: 1342279441}
   m_Layer: 5
-  m_Name: ResourceCounter
+  m_Name: GoldResourceCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3181,7 +3181,7 @@ GameObject:
   - component: {fileID: 1375180473}
   - component: {fileID: 1375180472}
   m_Layer: 5
-  m_Name: CoinsIcon
+  m_Name: CoinIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3256,7 +3256,7 @@ GameObject:
   - component: {fileID: 1386867478}
   - component: {fileID: 1386867477}
   m_Layer: 5
-  m_Name: ResourceCounter
+  m_Name: StickResourceCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3604,7 +3604,7 @@ GameObject:
   - component: {fileID: 1486449658}
   - component: {fileID: 1486449657}
   m_Layer: 5
-  m_Name: CoinsCounter
+  m_Name: CoinResourceCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4564,7 +4564,7 @@ GameObject:
   - component: {fileID: 1847862225}
   - component: {fileID: 1847862224}
   m_Layer: 5
-  m_Name: ResourceCounter
+  m_Name: BookResourceCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5058,7 +5058,7 @@ GameObject:
   - component: {fileID: 2061958688}
   - component: {fileID: 2061958687}
   m_Layer: 5
-  m_Name: CoinsChangeCounter
+  m_Name: CoinChangeCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

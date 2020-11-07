@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
@@ -25,6 +26,19 @@ namespace Tests.Integration {
 			button.onClick.Invoke();
 
 			Assert.AreEqual(1, GameView.ViewModel.Units.Count);
+		}
+
+		[UnityTest]
+		public IEnumerator IsUnitBoughtWithResources() {
+			Prepare();
+			yield return null;
+
+			var button = GetBuyView("wolf").GetComponentInChildren<Button>();
+
+			button.onClick.Invoke();
+			yield return new WaitForSeconds(3);
+
+			Assert.AreEqual("100", GetCoinCounter());
 		}
 
 		[UnityTest]
