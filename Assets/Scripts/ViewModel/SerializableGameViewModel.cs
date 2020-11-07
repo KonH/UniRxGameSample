@@ -10,9 +10,9 @@ namespace Game.ViewModel {
 		public readonly GameViewModel ViewModel;
 
 		public SerializableGameViewModel(GameConfig config) {
-			_serializer = new GameSerializer(config);
-			var model = _serializer.LoadOrCreate();
-			ViewModel = new GameViewModel(config, model);
+			_serializer = new GameSerializer();
+			var model = _serializer.TryLoad();
+			ViewModel = GameViewModel.Create(config, model);
 			Observable.Timer(TimeSpan.FromSeconds(30))
 				.Subscribe(_ => Save());
 		}

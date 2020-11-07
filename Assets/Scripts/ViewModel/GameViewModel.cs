@@ -89,5 +89,26 @@ namespace Game.ViewModel {
 			Resources.Resources[upgradePrice.Name].Take(upgradePrice.Amount.Value);
 			unit.Level.Value++;
 		}
+
+		public static GameViewModel Create(GameConfig config) => Create(config, null);
+
+		public static GameViewModel Create(GameConfig config, GameModel model) =>
+			new GameViewModel(config, model ?? CreateModel(config));
+
+		static GameModel CreateModel(GameConfig config) {
+			var resourceNames = config.Resources.Select(r => r.Name);
+			var initResource  = config.InitialResource;
+			return new GameModel {
+				Resources = new ResourcePack(
+					resourceNames
+						.Select(name => {
+							var amount = (initResource.Name == name) ? initResource.Amount : 0;
+							return new ResourceModel {
+								Name   = name,
+								Amount = amount
+							};
+						}))
+			};
+		}
 	}
 }
