@@ -13,13 +13,14 @@ namespace Game.View {
 		CompositeDisposable _disposables;
 
 		GameViewModel _game;
-		string        _unitType;
 
 		long _priceAmount;
 
+		public string UnitType { get; private set; }
+
 		public void Init(GameViewModel game, string unitType) {
-			_game     = game;
-			_unitType = unitType;
+			_game    = game;
+			UnitType = unitType;
 			var price     = _game.GetBuyPrice(unitType);
 			var sprite    = _game.GetResourceIcon(price.Name);
 			var resources = _game.Resources;
@@ -28,7 +29,8 @@ namespace Game.View {
 			_disposables = new CompositeDisposable();
 			var requiredResource = resources.Resources[price.Name];
 			requiredResource.Amount
-				.Subscribe(UpdateAvailability)
+				.Select(GetAvailability)
+				.SubscribeToInteractable(_button)
 				.AddTo(_disposables);
 			_button.onClick
 				.AsObservable()
@@ -38,14 +40,9 @@ namespace Game.View {
 			_priceText.text    = _priceAmount.ToString();
 		}
 
-		void UpdateAvailability(long currentAmount) {
-			var isEnough = (currentAmount >= _priceAmount);
-			_button.interactable = isEnough;
-		}
+		bool GetAvailability(long currentAmount) => (currentAmount >= _priceAmount);
 
-		void OnBuy() {
-			_game.BuyUnit(_unitType);
-		}
+		void OnBuy() => _game.BuyUnit(UnitType);
 
 		void OnDestroy() {
 			_disposables.Dispose();
