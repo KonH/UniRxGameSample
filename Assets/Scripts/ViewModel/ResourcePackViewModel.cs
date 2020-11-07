@@ -17,10 +17,10 @@ namespace Game.ViewModel {
 					.ToDictionary(r => r.Name, r => new ResourceViewModel(r)));
 		}
 
-		internal ResourcePack TakeAll() =>
+		public ResourcePack TakeAll() =>
 			new ResourcePack(Resources.Select(r => TakeAll(r.Key)));
 
-		internal ResourceModel TakeAll(string name) {
+		public ResourceModel TakeAll(string name) {
 			var viewModel = Resources[name];
 			var amount    = viewModel.Amount.Value;
 			viewModel.Take(viewModel.Amount.Value);

@@ -11,22 +11,23 @@ namespace Game.View {
 		[SerializeField] UnitsView      _unitsView;
 
 		SerializableGameViewModel _serializable;
-		GameViewModel             _viewModel;
+
+		public GameViewModel ViewModel { get; private set; }
 
 		void Awake() => Init();
 
 		void Init() {
 			if ( UseSerialization ) {
 				_serializable = new SerializableGameViewModel(_config);
-				_viewModel    = _serializable.ViewModel;
+				ViewModel     = _serializable.ViewModel;
 			} else {
-				_viewModel = GameViewModel.Create(_config);
+				ViewModel = GameViewModel.Create(_config);
 			}
-			var resources = _viewModel.Resources;
+			var resources = ViewModel.Resources;
 			foreach ( var view in _resourceViews ) {
 				view.Init(resources);
 			}
-			_unitsView.Init(_viewModel);
+			_unitsView.Init(ViewModel);
 		}
 
 		void Update() => _serializable?.ViewModel.Update();
