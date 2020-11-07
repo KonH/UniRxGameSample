@@ -64,8 +64,9 @@ namespace Game.ViewModel {
 
 		public void BuyUnit(string unitType) {
 			var price = GetBuyPrice(unitType);
-			Resources.Resources[price.Name].Take(price.Amount);
-			AddUnit(unitType);
+			if ( Resources.Resources[price.Name].TryTake(price.Amount) ) {
+				AddUnit(unitType);
+			}
 		}
 
 		[CanBeNull]
