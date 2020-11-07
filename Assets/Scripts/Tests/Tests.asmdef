@@ -1,13 +1,14 @@
 {
     "name": "Tests",
     "references": [
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
-        "UniRx",
-        "Shared",
-        "Model",
-        "ViewModel",
-        "View"
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:06d4335bf18bd4525b5cac5ad7a11650",
+        "GUID:feee712de856a4b0f9d5dcd004577a88",
+        "GUID:9979f3b5945194be29761b84270cadce",
+        "GUID:2007d4553ab724324902d932581cfd07",
+        "GUID:5111613d4437d475e9be75b24b775c79"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
