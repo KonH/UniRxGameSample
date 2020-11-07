@@ -6,17 +6,16 @@ using UnityEngine;
 
 namespace Game.View {
 	public sealed class ResourceView : MonoBehaviour {
+		readonly DisposableOwner _owner = new DisposableOwner();
+
 		[SerializeField] string   _name;
 		[SerializeField] TMP_Text _text;
 		[SerializeField] TMP_Text _appearText;
 
 		long _lastAmount;
 
-		CompositeDisposable _disposables;
-
 		public void Init(ResourcePackViewModel packViewModel) {
-			_disposables?.Dispose();
-			_disposables = new CompositeDisposable();
+			_owner.SetupDisposables();
 			var viewModel = packViewModel.Resources[_name];
 			UpdateValue(viewModel.Amount.Value);
 			StopAppear();
@@ -26,12 +25,10 @@ namespace Game.View {
 				.Delay(TimeSpan.FromSeconds(0.75))
 				.Do(_ => StopAppear())
 				.Subscribe(UpdateValue)
-				.AddTo(_disposables);
+				.AddTo(_owner.Disposables);
 		}
 
-		void OnDestroy() {
-			_disposables?.Dispose();
-		}
+		void OnDestroy() => _owner.Dispose();
 
 		void StartAppear(long newAmount) {
 			var diff = (newAmount - _lastAmount);

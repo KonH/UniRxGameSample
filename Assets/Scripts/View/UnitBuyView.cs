@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 namespace Game.View {
 	public sealed class UnitBuyView : MonoBehaviour {
+		readonly DisposableOwner _owner = new DisposableOwner();
+
 		[SerializeField] Image    _priceImage;
 		[SerializeField] TMP_Text _priceText;
 		[SerializeField] Button   _button;
-
-		CompositeDisposable _disposables;
 
 		GameViewModel _game;
 
@@ -25,17 +25,16 @@ namespace Game.View {
 			var sprite    = _game.GetResourceIcon(price.Name);
 			var resources = _game.Resources;
 			_priceAmount = price.Amount;
-			_disposables?.Dispose();
-			_disposables = new CompositeDisposable();
+			_owner.SetupDisposables();
 			var requiredResource = resources.Resources[price.Name];
 			requiredResource.Amount
 				.Select(GetAvailability)
 				.SubscribeToInteractable(_button)
-				.AddTo(_disposables);
+				.AddTo(_owner.Disposables);
 			_button.onClick
 				.AsObservable()
 				.Subscribe(_ => OnBuy())
-				.AddTo(_disposables);
+				.AddTo(_owner.Disposables);
 			_priceImage.sprite = sprite;
 			_priceText.text    = _priceAmount.ToString();
 		}
@@ -44,8 +43,6 @@ namespace Game.View {
 
 		void OnBuy() => _game.BuyUnit(UnitType);
 
-		void OnDestroy() {
-			_disposables.Dispose();
-		}
+		void OnDestroy() => _owner.Dispose();
 	}
 }

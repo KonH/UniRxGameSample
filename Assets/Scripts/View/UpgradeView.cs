@@ -5,29 +5,30 @@ using UnityEngine.UI;
 
 namespace Game.View {
 	public sealed class UpgradeView : MonoBehaviour {
+		readonly DisposableOwner _owner = new DisposableOwner();
+
 		[SerializeField] DynamicResourceView _view;
 		[SerializeField] Button              _button;
 
 		GameViewModel _game;
 		UnitViewModel _unit;
 
-		CompositeDisposable _disposables;
-
 		public void Init(GameViewModel game, UnitViewModel viewModel) {
 			_game = game;
 			_unit = viewModel;
-			_disposables?.Dispose();
-			_disposables = new CompositeDisposable();
+			_owner.SetupDisposables();
 			viewModel.UpgradePrice
 				.Subscribe(OnPriceChanged)
-				.AddTo(_disposables);
+				.AddTo(_owner.Disposables);
 			viewModel.CanUpgrade
 				.SubscribeToInteractable(_button)
-				.AddTo(_disposables);
+				.AddTo(_owner.Disposables);
 			_button.onClick.AsObservable()
 				.Subscribe(_ => OnClick())
-				.AddTo(_disposables);
+				.AddTo(_owner.Disposables);
 		}
+
+		void OnDestroy() => _owner.Dispose();
 
 		void OnPriceChanged(ResourceViewModel viewModel) {
 			var hasPrice = !viewModel.IsEmpty;
