@@ -30,7 +30,7 @@ namespace Game.View {
 			_unitsView.Init(ViewModel);
 		}
 
-		void Update() => _serializable?.ViewModel.Update();
+		void Update() => ViewModel.Update();
 
 		void OnApplicationQuit() => _serializable?.Save();
 	}
