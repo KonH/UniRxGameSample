@@ -12,7 +12,11 @@ namespace Game.View {
 
 		long _lastAmount;
 
+		CompositeDisposable _disposables;
+
 		public void Init(ResourcePackViewModel packViewModel) {
+			_disposables?.Dispose();
+			_disposables = new CompositeDisposable();
 			var viewModel = packViewModel.Resources[_name];
 			UpdateValue(viewModel.Amount.Value);
 			StopAppear();
@@ -21,7 +25,12 @@ namespace Game.View {
 				.Do(StartAppear)
 				.Delay(TimeSpan.FromSeconds(0.75))
 				.Do(_ => StopAppear())
-				.Subscribe(UpdateValue);
+				.Subscribe(UpdateValue)
+				.AddTo(_disposables);
+		}
+
+		void OnDestroy() {
+			_disposables?.Dispose();
 		}
 
 		void StartAppear(long newAmount) {
