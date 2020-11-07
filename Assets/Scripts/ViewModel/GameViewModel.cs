@@ -90,9 +90,17 @@ namespace Game.ViewModel {
 		public UnitConfig GetUnitConfig(string unitType) => _config.Units.Find(u => u.Type == unitType);
 
 		public void UpgradeUnit(UnitViewModel unit) {
-			var upgradePrice = unit.UpgradePrice.Value;
-			Resources.Resources[upgradePrice.Model.Name].Take(upgradePrice.Amount.Value);
-			unit.Level.Value++;
+			var config = GetUnitConfig(unit.Type);
+			if ( config == null ) {
+				return;
+			}
+			if ( unit.Level.Value >= (config.Levels.Count - 1) ) {
+				return;
+			}
+			var upgradePrice = unit.UpgradePrice.Value.Model;
+			if ( Resources.Resources[upgradePrice.Name].TryTake(upgradePrice.Amount) ) {
+				unit.Level.Value++;
+			}
 		}
 
 		public static GameViewModel Create(GameConfig config) => Create(config, null);
