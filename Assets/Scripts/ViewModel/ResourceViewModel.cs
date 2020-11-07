@@ -5,14 +5,14 @@ namespace Game.ViewModel {
 	public sealed class ResourceViewModel {
 		readonly ReactiveProperty<long> _amount;
 
-		public readonly string Name;
+		public readonly ResourceModel Model;
 
 		public readonly ReadOnlyReactiveProperty<long> Amount;
 
 		public bool IsEmpty => (Amount.Value == 0);
 
 		public ResourceViewModel(ResourceModel model) {
-			Name = model.Name;
+			Model = model;
 			_amount = new ReactiveProperty<long>(model.Amount);
 			_amount.Subscribe(v => model.Amount = v);
 			Amount = _amount.ToReadOnlyReactiveProperty();
@@ -22,7 +22,7 @@ namespace Game.ViewModel {
 
 		public ResourceModel Take(long amount) {
 			_amount.Value -= amount;
-			return new ResourceModel(Name, amount);
+			return new ResourceModel(Model.Name, amount);
 		}
 
 		public bool TryTake(long amount) {

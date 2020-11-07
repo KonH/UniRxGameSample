@@ -27,13 +27,13 @@ namespace Game.ViewModel {
 			return new ResourceModel(name, amount);
 		}
 
-		internal void Add(ResourcePack pack) {
+		public void Add(ResourcePack pack) {
 			foreach ( var model in pack.Content ) {
 				Add(model);
 			}
 		}
 
-		internal void Add(ResourceModel model) => Add(model.Name, model.Amount);
+		public void Add(ResourceModel model) => Add(model.Name, model.Amount);
 
 		internal void Add(string name, long amount) {
 			if ( !Resources.TryGetValue(name, out var viewModel) ) {

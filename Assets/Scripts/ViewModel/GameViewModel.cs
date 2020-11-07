@@ -50,23 +50,27 @@ namespace Game.ViewModel {
 			Resources.Add(income);
 		}
 
-		public void AddUnit(string unitType) {
+		[CanBeNull]
+		public UnitViewModel BuyUnit(string unitType) {
+			var price = GetBuyPrice(unitType);
+			if ( Resources.Resources[price.Name].TryTake(price.Amount) ) {
+				return AddUnit(unitType);
+			}
+			return null;
+		}
+
+		UnitViewModel AddUnit(string unitType) {
 			var config = GetUnitConfig(unitType);
 			if ( config == null ) {
-				return;
+				return null;
 			}
 			var now        = Time.Now.ToUnixTimeMilliseconds();
 			var incomeType = config.Levels[0].Income.Name;
 			var model      = new UnitModel(unitType, 0, now, new ResourceModel(incomeType, 0));
 			Model.Units.Add(model);
-			Units.Add(CreateViewModel(model));
-		}
-
-		public void BuyUnit(string unitType) {
-			var price = GetBuyPrice(unitType);
-			if ( Resources.Resources[price.Name].TryTake(price.Amount) ) {
-				AddUnit(unitType);
-			}
+			var viewModel = CreateViewModel(model);
+			Units.Add(viewModel);
+			return viewModel;
 		}
 
 		[CanBeNull]
@@ -87,7 +91,7 @@ namespace Game.ViewModel {
 
 		public void UpgradeUnit(UnitViewModel unit) {
 			var upgradePrice = unit.UpgradePrice.Value;
-			Resources.Resources[upgradePrice.Name].Take(upgradePrice.Amount.Value);
+			Resources.Resources[upgradePrice.Model.Name].Take(upgradePrice.Amount.Value);
 			unit.Level.Value++;
 		}
 

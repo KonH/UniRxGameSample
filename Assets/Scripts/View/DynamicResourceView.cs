@@ -10,7 +10,7 @@ namespace Game.View {
 		[SerializeField] TMP_Text _text;
 
 		public void Init(GameViewModel game, ResourceViewModel viewModel) {
-			_image.sprite = game.GetResourceIcon(viewModel.Name);
+			_image.sprite = game.GetResourceIcon(viewModel.Model.Name);
 			viewModel.Amount
 				.Subscribe(UpdateValue);
 		}

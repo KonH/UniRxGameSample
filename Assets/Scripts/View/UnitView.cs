@@ -11,12 +11,13 @@ namespace Game.View {
 
 		GameViewModel _game;
 		UnitInfoView  _infoView;
-		UnitViewModel _viewModel;
+
+		public UnitViewModel ViewModel { get; private set; }
 
 		public void Init(GameViewModel game, UnitInfoView infoView, UnitViewModel viewModel) {
-			_game         = game;
-			_infoView     = infoView;
-			_viewModel    = viewModel;
+			_game     = game;
+			_infoView = infoView;
+			ViewModel = viewModel;
 			viewModel.Sprite
 				.Subscribe(s => _image.sprite = s);
 			_button.onClick.AsObservable()
@@ -25,11 +26,11 @@ namespace Game.View {
 		}
 
 		void OnClick() {
-			if ( !_viewModel.Income.IsEmpty ) {
-				_game.Collect(_viewModel);
+			if ( !ViewModel.Income.IsEmpty ) {
+				_game.Collect(ViewModel);
 				return;
 			}
-			_infoView.Init(_game, _viewModel);
+			_infoView.Init(_game, ViewModel);
 		}
 	}
 }
