@@ -1,3 +1,4 @@
+using System;
 using Game.Config;
 using Game.ViewModel;
 using NUnit.Framework;
@@ -91,6 +92,69 @@ namespace Game.Tests.Unit {
 			viewModel.UpgradeUnit(unit);
 
 			Assert.AreEqual(2, unit.Level.Value);
+		}
+
+		[Test]
+		public void IsIncomeProduced() {
+			var viewModel = CreateViewModel();
+			viewModel.Time.FixedTime = DateTimeOffset.UtcNow;
+			viewModel.Update();
+
+			var unit = viewModel.BuyUnit("wolf");
+			Assert.IsNotNull(unit);
+			var config = viewModel.GetUnitConfig(unit.Type);
+			Assert.IsNotNull(config);
+			var level  = config.Levels[0];
+			var time   = level.IncomeTime;
+			var income = level.Income;
+
+			viewModel.Time.FixedTime = viewModel.Time.FixedTime.Add(TimeSpan.FromSeconds(time));
+			viewModel.Update();
+
+			Assert.AreEqual(income.Name, unit.Income.Model.Name);
+			Assert.AreEqual(income.Amount, unit.Income.Amount.Value);
+		}
+
+		[Test]
+		public void IsIncomeDoubleProduced() {
+			var viewModel = CreateViewModel();
+			viewModel.Time.FixedTime = DateTimeOffset.UtcNow;
+			viewModel.Update();
+
+			var unit = viewModel.BuyUnit("wolf");
+			Assert.IsNotNull(unit);
+			var config = viewModel.GetUnitConfig(unit.Type);
+			Assert.IsNotNull(config);
+			var level  = config.Levels[0];
+			var time   = level.IncomeTime;
+			var income = level.Income;
+
+			viewModel.Time.FixedTime = viewModel.Time.FixedTime.Add(TimeSpan.FromSeconds(time * 2));
+			viewModel.Update();
+
+			Assert.AreEqual(income.Amount * 2, unit.Income.Amount.Value);
+		}
+
+		[Test]
+		public void IsIncomeCollected() {
+			var viewModel = CreateViewModel();
+			viewModel.Time.FixedTime = DateTimeOffset.UtcNow;
+			viewModel.Update();
+
+			var unit = viewModel.BuyUnit("wolf");
+			Assert.IsNotNull(unit);
+			var config = viewModel.GetUnitConfig(unit.Type);
+			Assert.IsNotNull(config);
+			var level  = config.Levels[0];
+			var time   = level.IncomeTime;
+			var income = level.Income;
+
+			viewModel.Time.FixedTime = viewModel.Time.FixedTime.Add(TimeSpan.FromSeconds(time));
+			viewModel.Update();
+			viewModel.Collect(unit);
+
+			Assert.AreEqual(0, unit.Income.Amount.Value);
+			Assert.AreEqual(income.Amount, viewModel.Resources.Resources[income.Name].Amount.Value);
 		}
 
 		GameViewModel CreateViewModel() {
