@@ -6,13 +6,15 @@ namespace Game.ViewModel {
 	public sealed class ResourcePackViewModel {
 		readonly ResourcePack _model;
 
-		public readonly ReactiveDictionary<string, ResourceViewModel> Resources;
+		readonly ReactiveDictionary<string, ResourceViewModel> _resources;
+
+		public IReadOnlyReactiveDictionary<string, ResourceViewModel> Resources => _resources;
 
 		public bool IsEmpty => (Resources.Count == 0) || Resources.All(r => r.Value.IsEmpty);
 
 		public ResourcePackViewModel(ResourcePack model) {
 			_model = model;
-			Resources = new ReactiveDictionary<string, ResourceViewModel>(
+			_resources = new ReactiveDictionary<string, ResourceViewModel>(
 				_model.Content
 					.ToDictionary(r => r.Name, r => new ResourceViewModel(r)));
 		}
@@ -40,7 +42,7 @@ namespace Game.ViewModel {
 				var model = new ResourceModel(name, 0);
 				_model.Content.Add(model);
 				viewModel = new ResourceViewModel(model);
-				Resources.Add(name, viewModel);
+				_resources.Add(name, viewModel);
 			}
 			viewModel.Add(amount);
 		}

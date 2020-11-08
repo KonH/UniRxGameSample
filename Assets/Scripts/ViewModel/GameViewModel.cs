@@ -99,7 +99,7 @@ namespace Game.ViewModel {
 			}
 			var upgradePrice = unit.UpgradePrice.Value.Model;
 			if ( Resources.Resources[upgradePrice.Name].TryTake(upgradePrice.Amount) ) {
-				unit.Level.Value++;
+				unit.Upgrade();
 			}
 		}
 

@@ -12,29 +12,38 @@ namespace Game.ViewModel {
 
 		readonly ResourcePackViewModel _resources;
 
+		readonly ReactiveProperty<int>               _level;
+		readonly ReactiveProperty<Sprite>            _sprite;
+		readonly ReactiveProperty<ResourceViewModel> _upgradePrice;
+		readonly ReactiveProperty<bool>              _canUpgrade;
+
 		public string         Type           => _model.Type;
 		public DateTimeOffset LastIncomeTime => DateTimeOffset.FromUnixTimeMilliseconds(_model.LastIncomeTime);
 
-		public readonly ReactiveProperty<int>               Level;
-		public readonly ReactiveProperty<Sprite>            Sprite;
-		public readonly ReactiveProperty<ResourceViewModel> UpgradePrice;
-		public readonly ReactiveProperty<bool>              CanUpgrade;
+		public readonly ReadOnlyReactiveProperty<int>               Level;
+		public readonly ReadOnlyReactiveProperty<Sprite>            Sprite;
+		public readonly ReadOnlyReactiveProperty<ResourceViewModel> UpgradePrice;
+		public readonly ReadOnlyReactiveProperty<bool>              CanUpgrade;
 
 		public ResourceViewModel Income { get; }
 
 		public UnitViewModel(UnitConfig config, UnitModel model, ResourcePackViewModel resources) {
-			_config      = config;
-			_model       = model;
-			_resources   = resources;
-			Sprite       = new ReactiveProperty<Sprite>();
-			Level        = new ReactiveProperty<int>(_model.Level);
-			Income       = new ResourceViewModel(model.Income);
-			UpgradePrice = new ReactiveProperty<ResourceViewModel>(GetUpgradePrice());
-			CanUpgrade   = new ReactiveProperty<bool>(IsUpgradeAvailable());
+			_config       = config;
+			_model        = model;
+			_resources    = resources;
+			_sprite       = new ReactiveProperty<Sprite>();
+			Sprite        = _sprite.ToReadOnlyReactiveProperty();
+			_level        = new ReactiveProperty<int>(_model.Level);
+			Level         = _level.ToReadOnlyReactiveProperty();
+			Income        = new ResourceViewModel(model.Income);
+			_upgradePrice = new ReactiveProperty<ResourceViewModel>(GetUpgradePrice());
+			UpgradePrice  = _upgradePrice.ToReadOnlyReactiveProperty();
+			_canUpgrade   = new ReactiveProperty<bool>(IsUpgradeAvailable());
+			CanUpgrade    = _canUpgrade.ToReadOnlyReactiveProperty();
 			foreach ( var resource in resources.Resources ) {
 				resource.Value.Amount
 					.Select(_ => IsUpgradeAvailable())
-					.Subscribe(isAvailable => CanUpgrade.Value = isAvailable);
+					.Subscribe(isAvailable => _canUpgrade.Value = isAvailable);
 			}
 			Level
 				.Do(l => _model.Level = l)
@@ -64,14 +73,16 @@ namespace Game.ViewModel {
 			_model.LastIncomeTime = time.ToUnixTimeMilliseconds();
 		}
 
+		public void Upgrade() => _level.Value++;
+
 		void OnLevelUpdated(int level) {
 			UpdateSprite(level);
 			UpdateUpgradePrice();
-			CanUpgrade.Value = IsUpgradeAvailable();
+			_canUpgrade.Value = IsUpgradeAvailable();
 		}
 
-		void UpdateSprite(int level) => Sprite.Value = _config.Levels[level].Sprite;
+		void UpdateSprite(int level) => _sprite.Value = _config.Levels[level].Sprite;
 
-		void UpdateUpgradePrice() => UpgradePrice.Value = GetUpgradePrice();
+		void UpdateUpgradePrice() => _upgradePrice.Value = GetUpgradePrice();
 	}
 }
