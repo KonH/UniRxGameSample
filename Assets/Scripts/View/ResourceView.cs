@@ -50,7 +50,7 @@ namespace Game.View {
 		}
 
 		void UpdateValue(long newAmount) {
-			_text.text = newAmount.ToString();
+			_text.text  = newAmount.ToString();
 			_lastAmount = newAmount;
 		}
 	}

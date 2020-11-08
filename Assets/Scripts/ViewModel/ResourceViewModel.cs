@@ -15,7 +15,7 @@ namespace Game.ViewModel {
 
 		public ResourceViewModel([NotNull] ResourceModel model) {
 			Assert.IsNotNull(model, nameof(model));
-			Model = model;
+			Model   = model;
 			_amount = new ReactiveProperty<long>(model.Amount);
 			_amount.Subscribe(v => model.Amount = v);
 			Amount = _amount.ToReadOnlyReactiveProperty();

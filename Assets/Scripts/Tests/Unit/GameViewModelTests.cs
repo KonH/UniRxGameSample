@@ -26,7 +26,7 @@ namespace Game.Tests.Unit {
 			viewModel.BuyUnit("wolf");
 
 			var final = viewModel.Resources.GetAmount(price.Name);
-			Assert.AreEqual((initial - final), price.Amount);
+			Assert.AreEqual(initial - final, price.Amount);
 		}
 
 		[Test]
@@ -53,7 +53,7 @@ namespace Game.Tests.Unit {
 		[Test]
 		public void IsUnitUpgradedWithResources() {
 			var viewModel = CreateViewModel();
-			var unit = viewModel.BuyUnit("wolf");
+			var unit      = viewModel.BuyUnit("wolf");
 			Assert.IsNotNull(unit);
 
 			var price = unit.UpgradePrice.Value.Model;
@@ -63,7 +63,7 @@ namespace Game.Tests.Unit {
 			viewModel.UpgradeUnit(unit);
 
 			var final = viewModel.Resources.GetAmount(price.Name);
-			Assert.AreEqual((initial - final), price.Amount);
+			Assert.AreEqual(initial - final, price.Amount);
 		}
 
 		[Test]
@@ -81,7 +81,7 @@ namespace Game.Tests.Unit {
 		public void CantUpgradeUnitOnMaxLevel() {
 			var viewModel = CreateViewModel();
 
-			var unit   = viewModel.BuyUnit("wolf");
+			var unit = viewModel.BuyUnit("wolf");
 			Assert.IsNotNull(unit);
 			var config = viewModel.GetUnitConfig(unit.Type);
 			Assert.IsNotNull(config);

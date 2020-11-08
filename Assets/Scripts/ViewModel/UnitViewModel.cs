@@ -78,7 +78,7 @@ namespace Game.ViewModel {
 		public void Upgrade() {
 			_level.Value++;
 			var level = _level.Value;
-			Assert.IsTrue((level >= 0) && (level < _config.Levels.Count), nameof(level));
+			Assert.IsTrue(level >= 0 && level < _config.Levels.Count, nameof(level));
 		}
 
 		void OnLevelUpdated(int level) {
@@ -88,7 +88,7 @@ namespace Game.ViewModel {
 		}
 
 		void UpdateSprite(int level) {
-			Assert.IsTrue((level >= 0) && (level < _config.Levels.Count), nameof(level));
+			Assert.IsTrue(level >= 0 && level < _config.Levels.Count, nameof(level));
 			_sprite.Value = _config.Levels[level].Sprite;
 		}
 
