@@ -23,9 +23,12 @@ namespace Game.View {
 
 		public void Init([NotNull] ResourcePackViewModel packViewModel) {
 			Assert.IsNotNull(packViewModel, nameof(packViewModel));
+
 			_owner.SetupDisposables();
+
 			var viewModel = packViewModel.GetViewModel(_name);
 			Assert.IsNotNull(viewModel, nameof(viewModel));
+
 			UpdateValue(viewModel.Amount.Value);
 			StopAppear();
 			viewModel.Amount

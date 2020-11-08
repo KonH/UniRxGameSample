@@ -23,17 +23,20 @@ namespace Game.View {
 		void Awake() => Init();
 
 		void Init() {
-			if ( UseSerialization ) {
-				_serializable = new SerializableGameViewModel(_config);
-				ViewModel     = _serializable.ViewModel;
-			} else {
-				ViewModel = GameViewModel.Create(_config);
-			}
+			ViewModel = CreateViewModel();
 			var resources = ViewModel.Resources;
 			foreach ( var view in _resourceViews ) {
 				view.Init(resources);
 			}
 			_unitsView.Init(ViewModel);
+		}
+
+		GameViewModel CreateViewModel() {
+			if ( !UseSerialization ) {
+				return GameViewModel.Create(_config);
+			}
+			_serializable = new SerializableGameViewModel(_config);
+			return _serializable.ViewModel;
 		}
 
 		void Update() => ViewModel.Update();

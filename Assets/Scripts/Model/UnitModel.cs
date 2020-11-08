@@ -14,7 +14,9 @@ namespace Game.Model {
 		public UnitModel() {}
 
 		public UnitModel(string type, int level, long lastIncomeTime, [NotNull] ResourceModel income) {
+			Assert.IsNotNull(type, nameof(type));
 			Assert.IsNotNull(income, nameof(income));
+
 			Type           = type;
 			Level          = level;
 			LastIncomeTime = lastIncomeTime;

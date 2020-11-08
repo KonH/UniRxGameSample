@@ -26,18 +26,23 @@ namespace Game.View {
 		public void Init([NotNull] GameViewModel game, [NotNull] UnitViewModel viewModel) {
 			Assert.IsNotNull(game, nameof(game));
 			Assert.IsNotNull(viewModel, nameof(viewModel));
+
 			_owner.SetupDisposables();
+
+			_unitText.text = viewModel.Type;
+
 			_closeButton.onClick.AsObservable()
 				.Subscribe(_ => OnCloseClick())
 				.AddTo(_owner.Disposables);
-			_unitText.text = viewModel.Type;
 			viewModel.Sprite
 				.Subscribe(s => _unitImage.sprite = s)
 				.AddTo(_owner.Disposables);
+
 			_upgradeView.Init(game, viewModel);
 			foreach ( var statView in _statViews ) {
 				statView.Init(game, viewModel);
 			}
+
 			Show();
 		}
 

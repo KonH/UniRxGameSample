@@ -19,6 +19,7 @@ namespace Game.View {
 		public void Init([NotNull] GameViewModel game, [NotNull] ResourceViewModel viewModel) {
 			Assert.IsNotNull(game, nameof(game));
 			Assert.IsNotNull(viewModel, nameof(viewModel));
+
 			_image.sprite = game.GetResourceIcon(viewModel.Model.Name);
 			viewModel.Amount
 				.Subscribe(UpdateValue);

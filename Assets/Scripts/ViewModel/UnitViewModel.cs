@@ -32,6 +32,7 @@ namespace Game.ViewModel {
 			Assert.IsNotNull(config, nameof(config));
 			Assert.IsNotNull(model, nameof(model));
 			Assert.IsNotNull(resources, nameof(resources));
+
 			_config       = config;
 			_model        = model;
 			_resources    = resources;
@@ -49,6 +50,7 @@ namespace Game.ViewModel {
 					.Select(_ => IsUpgradeAvailable())
 					.Subscribe(isAvailable => _canUpgrade.Value = isAvailable);
 			}
+
 			Level
 				.Do(l => _model.Level = l)
 				.Subscribe(OnLevelUpdated);
@@ -71,6 +73,7 @@ namespace Game.ViewModel {
 		public void AddIncome(long amount, DateTimeOffset time) {
 			Assert.AreNotEqual(0, amount, nameof(amount));
 			Assert.AreNotEqual(default, time, nameof(time));
+
 			Income.Add(amount);
 			_model.LastIncomeTime = time.ToUnixTimeMilliseconds();
 		}

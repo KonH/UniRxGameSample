@@ -29,14 +29,18 @@ namespace Game.View {
 		public void Init([NotNull] GameViewModel game, [NotNull] string unitType) {
 			Assert.IsNotNull(game, nameof(game));
 			Assert.IsNotNull(unitType, nameof(unitType));
+
+			_owner.SetupDisposables();
+
 			_game    = game;
 			UnitType = unitType;
-			var price     = _game.GetBuyPrice(unitType);
-			var sprite    = _game.GetResourceIcon(price.Name);
-			var resources = _game.Resources;
-			_priceAmount = price.Amount;
-			_owner.SetupDisposables();
-			var requiredResource = resources.GetViewModel(price.Name);
+
+			var price = _game.GetBuyPrice(unitType);
+			_priceAmount       = price.Amount;
+			_priceImage.sprite = _game.GetResourceIcon(price.Name);
+			_priceText.text    = _priceAmount.ToString();
+
+			var requiredResource = _game.Resources.GetViewModel(price.Name);
 			Assert.IsNotNull(requiredResource, nameof(requiredResource));
 			requiredResource.Amount
 				.Select(GetAvailability)
@@ -46,8 +50,6 @@ namespace Game.View {
 				.AsObservable()
 				.Subscribe(_ => OnBuy())
 				.AddTo(_owner.Disposables);
-			_priceImage.sprite = sprite;
-			_priceText.text    = _priceAmount.ToString();
 		}
 
 		bool GetAvailability(long currentAmount) => (currentAmount >= _priceAmount);

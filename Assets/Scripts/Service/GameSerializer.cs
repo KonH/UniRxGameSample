@@ -24,6 +24,6 @@ namespace Game.Service {
 			File.WriteAllText(path, json);
 		}
 
-		string GetPath() => $"{Application.persistentDataPath}/save.json";
+		public static string GetPath() => $"{Application.persistentDataPath}/save.json";
 	}
 }

@@ -27,10 +27,12 @@ namespace Game.View {
 			Assert.IsNotNull(unitPrefab, nameof(unitPrefab));
 			Assert.IsNotNull(placeholderPrefab, nameof(placeholderPrefab));
 			Assert.IsNotNull(infoView, nameof(infoView));
+
 			_game        = game;
 			_unitPrefab  = unitPrefab;
 			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);
 			_infoView    = infoView;
+
 			foreach ( var unit in game.Units ) {
 				if ( unit.Type == _type ) {
 					OnAddUnit(unit);

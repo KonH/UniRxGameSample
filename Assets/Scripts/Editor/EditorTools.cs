@@ -1,12 +1,12 @@
 ﻿using System.IO;
+using Game.Service;
 using UnityEditor;
-using UnityEngine;
 
 namespace Game.Editor {
 	public static class EditorTools {
 		[MenuItem("Game/DeleteSave")]
 		public static void DeleteSave() {
-			var path = $"{Application.persistentDataPath}/save.json";
+			var path = GameSerializer.GetPath();
 			if ( File.Exists(path) ) {
 				File.Delete(path);
 			}

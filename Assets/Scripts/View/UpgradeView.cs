@@ -23,9 +23,11 @@ namespace Game.View {
 		public void Init([NotNull] GameViewModel game, [NotNull] UnitViewModel viewModel) {
 			Assert.IsNotNull(game, nameof(game));
 			Assert.IsNotNull(viewModel, nameof(viewModel));
+
+			_owner.SetupDisposables();
+
 			_game = game;
 			_unit = viewModel;
-			_owner.SetupDisposables();
 			viewModel.UpgradePrice
 				.Subscribe(OnPriceChanged)
 				.AddTo(_owner.Disposables);

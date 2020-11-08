@@ -18,6 +18,7 @@ namespace Game.View {
 
 		public void Init([NotNull] GameViewModel game) {
 			Assert.IsNotNull(game, nameof(game));
+
 			foreach ( var row in _rows ) {
 				row.Init(game, _unitPrefab, _placeholderPrefab, _infoView);
 			}

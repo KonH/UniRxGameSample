@@ -23,8 +23,10 @@ namespace Game.View {
 		public void Init([NotNull] GameViewModel game, [NotNull] UnitViewModel viewModel) {
 			Assert.IsNotNull(game, nameof(game));
 			Assert.IsNotNull(viewModel, nameof(viewModel));
+
 			_game = game;
 			_type = viewModel.Type;
+
 			viewModel.Level
 				.Subscribe(OnLevelChanged);
 		}

@@ -27,6 +27,7 @@ namespace Game.View {
 			Assert.IsNotNull(game, nameof(game));
 			Assert.IsNotNull(infoView, nameof(infoView));
 			Assert.IsNotNull(viewModel, nameof(viewModel));
+
 			_game     = game;
 			_infoView = infoView;
 			ViewModel = viewModel;
@@ -34,6 +35,7 @@ namespace Game.View {
 				.Subscribe(s => _image.sprite = s);
 			_button.onClick.AsObservable()
 				.Subscribe(_ => OnClick());
+
 			_incomeView.Init(game, viewModel.Income);
 		}
 

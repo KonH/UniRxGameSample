@@ -19,7 +19,7 @@ namespace Game.ViewModel {
 		public readonly ResourcePackViewModel             Resources;
 		public readonly ReactiveCollection<UnitViewModel> Units;
 
-		public GameViewModel(GameConfig config, GameModel model) {
+		GameViewModel(GameConfig config, GameModel model) {
 			_config   = config;
 			Model     = model;
 			Time      = new TimeProvider();
@@ -48,6 +48,7 @@ namespace Game.ViewModel {
 
 		public void Collect([NotNull] UnitViewModel unit) {
 			Assert.IsNotNull(unit, nameof(unit));
+
 			var income = unit.Income.TakeAll();
 			Resources.Add(income);
 		}
@@ -55,6 +56,7 @@ namespace Game.ViewModel {
 		[CanBeNull]
 		public UnitViewModel BuyUnit([NotNull] string unitType) {
 			Assert.IsNotNull(unitType, nameof(unitType));
+
 			var price = GetBuyPrice(unitType);
 			return Resources.TryTake(price) ? AddUnit(unitType) : null;
 		}
@@ -76,12 +78,14 @@ namespace Game.ViewModel {
 		[CanBeNull]
 		public Sprite GetResourceIcon([NotNull] string resourceName) {
 			Assert.IsNotNull(resourceName, nameof(resourceName));
+
 			var resourceConfig = _config.Resources.Find(r => r.Name == resourceName);
 			return resourceConfig?.Icon;
 		}
 
 		public ResourceModel GetBuyPrice([NotNull] string unitType) {
 			Assert.IsNotNull(unitType, nameof(unitType));
+
 			var unitConfig = GetUnitConfig(unitType);
 			return unitConfig?.Levels[0].Price ?? new ResourceModel(string.Empty, 0);
 		}
@@ -96,6 +100,7 @@ namespace Game.ViewModel {
 
 		public void UpgradeUnit([NotNull] UnitViewModel unit) {
 			Assert.IsNotNull(unit, nameof(unit));
+
 			var config = GetUnitConfig(unit.Type);
 			if ( config == null ) {
 				return;

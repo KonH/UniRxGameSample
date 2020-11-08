@@ -38,11 +38,15 @@ namespace Game.ViewModel {
 
 		public bool TryTake([NotNull] ResourceModel model) {
 			Assert.IsNotNull(model, nameof(model));
-			var isEnough = IsEnough(model);
-			if ( isEnough ) {
-				_resources[model.Name].Take(model.Amount);
+			if ( !IsEnough(model) ) {
+				return false;
 			}
-			return isEnough;
+			var viewModel = GetViewModel(model.Name);
+			if ( viewModel == null ) {
+				return false;
+			}
+			viewModel.Take(model.Amount);
+			return true;
 		}
 
 		public ResourcePack TakeAll() =>
@@ -54,7 +58,7 @@ namespace Game.ViewModel {
 				return new ResourceModel(name, 0);
 			}
 			var amount = viewModel.Amount.Value;
-			viewModel.Take(viewModel.Amount.Value);
+			viewModel.Take(amount);
 			return new ResourceModel(name, amount);
 		}
 
