@@ -32,3 +32,9 @@ This project is not production ready, it's only proof-of-concept to get experien
     - **Unit** - isolated tests to cover only serialization and ViewModel layer
 - **View** - MonoBehaviour classes, which uses ViewModels to show and update state and pass events into ViewModel layer
 - **ViewModel** - wrappers for Model layer with ReactiveProperties to notify about value updates, game logic to manipulate state
+
+## Credits
+
+- https://opengameart.org/content/turning-polyhedron-gui
+- https://opengameart.org/content/ascension-adventure-interface-and-miscellaneous
+- https://opengameart.org/content/10-fantasy-rpg-enemies
