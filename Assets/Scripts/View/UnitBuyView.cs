@@ -26,7 +26,7 @@ namespace Game.View {
 			var resources = _game.Resources;
 			_priceAmount = price.Amount;
 			_owner.SetupDisposables();
-			var requiredResource = resources.Resources[price.Name];
+			var requiredResource = resources.GetViewModel(price.Name);
 			requiredResource.Amount
 				.Select(GetAvailability)
 				.SubscribeToInteractable(_button)

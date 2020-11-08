@@ -62,10 +62,7 @@ namespace Game.ViewModel {
 
 		bool IsUpgradeAvailable() {
 			var price = GetUpgradePriceModel();
-			if ( string.IsNullOrEmpty(price.Name) ) {
-				return false;
-			}
-			return _resources.Resources[price.Name].IsEnough(price.Amount);
+			return _resources.IsEnough(price);
 		}
 
 		public void AddIncome(long amount, DateTimeOffset time) {

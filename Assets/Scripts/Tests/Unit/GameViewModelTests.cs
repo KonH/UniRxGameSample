@@ -21,11 +21,11 @@ namespace Game.Tests.Unit {
 			var config    = viewModel.GetUnitConfig("wolf");
 			Assert.IsNotNull(config);
 			var price   = config.Levels[0].Price;
-			var initial = viewModel.Resources.Resources[price.Name].Amount.Value;
+			var initial = viewModel.Resources.GetAmount(price.Name);
 
 			viewModel.BuyUnit("wolf");
 
-			var final = viewModel.Resources.Resources[price.Name].Amount.Value;
+			var final = viewModel.Resources.GetAmount(price.Name);
 			Assert.AreEqual((initial - final), price.Amount);
 		}
 
@@ -58,11 +58,11 @@ namespace Game.Tests.Unit {
 
 			var price = unit.UpgradePrice.Value.Model;
 			viewModel.Resources.Add(price);
-			var initial = viewModel.Resources.Resources[price.Name].Amount.Value;
+			var initial = viewModel.Resources.GetAmount(price.Name);
 
 			viewModel.UpgradeUnit(unit);
 
-			var final = viewModel.Resources.Resources[price.Name].Amount.Value;
+			var final = viewModel.Resources.GetAmount(price.Name);
 			Assert.AreEqual((initial - final), price.Amount);
 		}
 
@@ -154,7 +154,7 @@ namespace Game.Tests.Unit {
 			viewModel.Collect(unit);
 
 			Assert.AreEqual(0, unit.Income.Amount.Value);
-			Assert.AreEqual(income.Amount, viewModel.Resources.Resources[income.Name].Amount.Value);
+			Assert.AreEqual(income.Amount, viewModel.Resources.GetAmount(income.Name));
 		}
 
 		GameViewModel CreateViewModel() {

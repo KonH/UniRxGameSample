@@ -16,7 +16,7 @@ namespace Game.View {
 
 		public void Init(ResourcePackViewModel packViewModel) {
 			_owner.SetupDisposables();
-			var viewModel = packViewModel.Resources[_name];
+			var viewModel = packViewModel.GetViewModel(_name);
 			UpdateValue(viewModel.Amount.Value);
 			StopAppear();
 			viewModel.Amount

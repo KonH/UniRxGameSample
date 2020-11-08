@@ -67,7 +67,7 @@ namespace Tests.Integration {
 			unitButton.onClick.Invoke();
 
 			Assert.IsFalse(incomeView.gameObject.activeInHierarchy);
-			Assert.AreEqual(income.Amount, GameView.ViewModel.Resources.Resources[income.Name].Amount.Value);
+			Assert.AreEqual(income.Amount, GameView.ViewModel.Resources.GetAmount(income.Name));
 		}
 	}
 }

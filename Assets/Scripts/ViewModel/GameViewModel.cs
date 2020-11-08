@@ -53,7 +53,7 @@ namespace Game.ViewModel {
 		[CanBeNull]
 		public UnitViewModel BuyUnit(string unitType) {
 			var price = GetBuyPrice(unitType);
-			if ( Resources.Resources[price.Name].TryTake(price.Amount) ) {
+			if ( Resources.TryTake(price) ) {
 				return AddUnit(unitType);
 			}
 			return null;
@@ -98,7 +98,7 @@ namespace Game.ViewModel {
 				return;
 			}
 			var upgradePrice = unit.UpgradePrice.Value.Model;
-			if ( Resources.Resources[upgradePrice.Name].TryTake(upgradePrice.Amount) ) {
+			if ( Resources.TryTake(upgradePrice) ) {
 				unit.Upgrade();
 			}
 		}
