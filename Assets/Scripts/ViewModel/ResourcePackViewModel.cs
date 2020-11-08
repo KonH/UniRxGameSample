@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Game.Shared;
 using JetBrains.Annotations;
 using UniRx;
+using UnityEngine.Assertions;
 
 namespace Game.ViewModel {
 	public sealed class ResourcePackViewModel {
@@ -13,9 +12,8 @@ namespace Game.ViewModel {
 
 		public IReadOnlyReactiveDictionary<string, ResourceViewModel> Resources => _resources;
 
-		public bool IsEmpty => (_resources.Count == 0) || _resources.All(r => r.Value.IsEmpty);
-
-		public ResourcePackViewModel(ResourcePack model) {
+		public ResourcePackViewModel([NotNull] ResourcePack model) {
+			Assert.IsNotNull(model, nameof(model));
 			_model = model;
 			_resources = new ReactiveDictionary<string, ResourceViewModel>(
 				_model.Content
@@ -23,16 +21,23 @@ namespace Game.ViewModel {
 		}
 
 		[CanBeNull]
-		public ResourceViewModel GetViewModel(string name) =>
-			_resources.TryGetValue(name, out var viewModel) ? viewModel : null;
+		public ResourceViewModel GetViewModel([NotNull] string name) {
+			Assert.IsNotNull(name, nameof(name));
+			return _resources.TryGetValue(name, out var viewModel) ? viewModel : null;
+		}
 
-		public long GetAmount(string name) =>
-			_resources.TryGetValue(name, out var value) ? value.Amount.Value : 0;
+		public long GetAmount([NotNull] string name) {
+			Assert.IsNotNull(name, nameof(name));
+			return _resources.TryGetValue(name, out var value) ? value.Amount.Value : 0;
+		}
 
-		public bool IsEnough(ResourceModel model) =>
-			_resources.TryGetValue(model.Name, out var value) && value.IsEnough(model.Amount);
+		public bool IsEnough([NotNull] ResourceModel model) {
+			Assert.IsNotNull(model, nameof(model));
+			return _resources.TryGetValue(model.Name, out var value) && value.IsEnough(model.Amount);
+		}
 
-		public bool TryTake(ResourceModel model) {
+		public bool TryTake([NotNull] ResourceModel model) {
+			Assert.IsNotNull(model, nameof(model));
 			var isEnough = IsEnough(model);
 			if ( isEnough ) {
 				_resources[model.Name].Take(model.Amount);
@@ -43,20 +48,20 @@ namespace Game.ViewModel {
 		public ResourcePack TakeAll() =>
 			new ResourcePack(_resources.Select(r => TakeAll(r.Key)));
 
-		public ResourceModel TakeAll(string name) {
+		ResourceModel TakeAll(string name) {
 			var viewModel = GetViewModel(name);
-			var amount    = viewModel.Amount.Value;
+			if ( viewModel == null ) {
+				return new ResourceModel(name, 0);
+			}
+			var amount = viewModel.Amount.Value;
 			viewModel.Take(viewModel.Amount.Value);
 			return new ResourceModel(name, amount);
 		}
 
-		public void Add(ResourcePack pack) {
-			foreach ( var model in pack.Content ) {
-				Add(model);
-			}
+		public void Add([NotNull] ResourceModel model) {
+			Assert.IsNotNull(model, nameof(model));
+			Add(model.Name, model.Amount);
 		}
-
-		public void Add(ResourceModel model) => Add(model.Name, model.Amount);
 
 		void Add(string name, long amount) {
 			if ( !_resources.TryGetValue(name, out var viewModel) ) {

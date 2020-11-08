@@ -4,6 +4,7 @@ using Game.ViewModel;
 using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Game.View {
 	[Serializable]
@@ -20,7 +21,12 @@ namespace Game.View {
 		List<UnitView> _instances = new List<UnitView>();
 
 		public void Init(
-			GameViewModel game, UnitView unitPrefab, UnitBuyView placeholderPrefab, UnitInfoView infoView) {
+			[NotNull] GameViewModel game, [NotNull] UnitView unitPrefab,
+			[NotNull] UnitBuyView placeholderPrefab, [NotNull] UnitInfoView infoView) {
+			Assert.IsNotNull(game, nameof(game));
+			Assert.IsNotNull(unitPrefab, nameof(unitPrefab));
+			Assert.IsNotNull(placeholderPrefab, nameof(placeholderPrefab));
+			Assert.IsNotNull(infoView, nameof(infoView));
 			_game        = game;
 			_unitPrefab  = unitPrefab;
 			_placeholder = UnityEngine.Object.Instantiate(placeholderPrefab);

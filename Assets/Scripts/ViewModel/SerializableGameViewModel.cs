@@ -1,7 +1,9 @@
 using System;
 using Game.Config;
 using Game.Service;
+using JetBrains.Annotations;
 using UniRx;
+using UnityEngine.Assertions;
 
 namespace Game.ViewModel {
 	public sealed class SerializableGameViewModel {
@@ -9,7 +11,8 @@ namespace Game.ViewModel {
 
 		public readonly GameViewModel ViewModel;
 
-		public SerializableGameViewModel(GameConfig config) {
+		public SerializableGameViewModel([NotNull] GameConfig config) {
+			Assert.IsNotNull(config);
 			_serializer = new GameSerializer();
 			var model = _serializer.TryLoad();
 			ViewModel = GameViewModel.Create(config, model);

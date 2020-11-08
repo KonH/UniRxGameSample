@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Game.Shared {
 	[Serializable]
@@ -9,7 +12,7 @@ namespace Game.Shared {
 
 		public ResourcePack() {}
 
-		public ResourcePack(IEnumerable<ResourceModel> content) {
+		public ResourcePack([NotNull] IEnumerable<ResourceModel> content) {
 			Content = content.ToList();
 		}
 
@@ -35,6 +38,6 @@ namespace Game.Shared {
 		public override bool Equals(object obj) =>
 			ReferenceEquals(this, obj) || obj is ResourcePack other && Equals(other);
 
-		public override int GetHashCode() => (Content != null ? Content.GetHashCode() : 0);
+		public override int GetHashCode() => ((Content != null) ? Content.GetHashCode() : 0);
 	}
 }

@@ -1,7 +1,9 @@
 using Game.ViewModel;
+using JetBrains.Annotations;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Game.View {
@@ -14,7 +16,16 @@ namespace Game.View {
 		[SerializeField] UpgradeView _upgradeView;
 		[SerializeField] StatView[]  _statViews;
 
-		public void Init(GameViewModel game, UnitViewModel viewModel) {
+		void OnValidate() {
+			Assert.IsNotNull(_unitImage, nameof(_unitImage));
+			Assert.IsNotNull(_unitText, nameof(_unitText));
+			Assert.IsNotNull(_closeButton, nameof(_closeButton));
+			Assert.IsNotNull(_upgradeView, nameof(_upgradeView));
+		}
+
+		public void Init([NotNull] GameViewModel game, [NotNull] UnitViewModel viewModel) {
+			Assert.IsNotNull(game, nameof(game));
+			Assert.IsNotNull(viewModel, nameof(viewModel));
 			_owner.SetupDisposables();
 			_closeButton.onClick.AsObservable()
 				.Subscribe(_ => OnCloseClick())

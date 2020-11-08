@@ -1,8 +1,10 @@
 using Game.ViewModel;
+using JetBrains.Annotations;
 using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
 using UniRx;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 namespace Game.View {
 	public class StatView : MonoBehaviour {
@@ -13,7 +15,14 @@ namespace Game.View {
 		GameViewModel _game;
 		string        _type;
 
-		public void Init(GameViewModel game, UnitViewModel viewModel) {
+		void OnValidate() {
+			Assert.IsNotNull(_image, nameof(_image));
+			Assert.IsNotNull(_text, nameof(_text));
+		}
+
+		public void Init([NotNull] GameViewModel game, [NotNull] UnitViewModel viewModel) {
+			Assert.IsNotNull(game, nameof(game));
+			Assert.IsNotNull(viewModel, nameof(viewModel));
 			_game    = game;
 			_type    = viewModel.Type;
 			viewModel.Level

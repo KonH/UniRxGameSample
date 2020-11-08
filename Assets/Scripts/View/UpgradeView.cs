@@ -1,6 +1,8 @@
 using Game.ViewModel;
-using UnityEngine;
+using JetBrains.Annotations;
 using UniRx;
+using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Game.View {
@@ -13,7 +15,14 @@ namespace Game.View {
 		GameViewModel _game;
 		UnitViewModel _unit;
 
-		public void Init(GameViewModel game, UnitViewModel viewModel) {
+		void OnValidate() {
+			Assert.IsNotNull(_view, nameof(_view));
+			Assert.IsNotNull(_button, nameof(_button));
+		}
+
+		public void Init([NotNull] GameViewModel game, [NotNull] UnitViewModel viewModel) {
+			Assert.IsNotNull(game, nameof(game));
+			Assert.IsNotNull(viewModel, nameof(viewModel));
 			_game = game;
 			_unit = viewModel;
 			_owner.SetupDisposables();

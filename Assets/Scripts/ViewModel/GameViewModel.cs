@@ -7,6 +7,7 @@ using Game.Shared;
 using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Game.ViewModel {
 	public sealed class GameViewModel {
@@ -45,18 +46,17 @@ namespace Game.ViewModel {
 			}
 		}
 
-		public void Collect(UnitViewModel unit) {
+		public void Collect([NotNull] UnitViewModel unit) {
+			Assert.IsNotNull(unit, nameof(unit));
 			var income = unit.Income.TakeAll();
 			Resources.Add(income);
 		}
 
 		[CanBeNull]
-		public UnitViewModel BuyUnit(string unitType) {
+		public UnitViewModel BuyUnit([NotNull] string unitType) {
+			Assert.IsNotNull(unitType, nameof(unitType));
 			var price = GetBuyPrice(unitType);
-			if ( Resources.TryTake(price) ) {
-				return AddUnit(unitType);
-			}
-			return null;
+			return Resources.TryTake(price) ? AddUnit(unitType) : null;
 		}
 
 		UnitViewModel AddUnit(string unitType) {
@@ -74,12 +74,14 @@ namespace Game.ViewModel {
 		}
 
 		[CanBeNull]
-		public Sprite GetResourceIcon(string resourceName) {
+		public Sprite GetResourceIcon([NotNull] string resourceName) {
+			Assert.IsNotNull(resourceName, nameof(resourceName));
 			var resourceConfig = _config.Resources.Find(r => r.Name == resourceName);
 			return resourceConfig?.Icon;
 		}
 
-		public ResourceModel GetBuyPrice(string unitType) {
+		public ResourceModel GetBuyPrice([NotNull] string unitType) {
+			Assert.IsNotNull(unitType, nameof(unitType));
 			var unitConfig = GetUnitConfig(unitType);
 			return unitConfig?.Levels[0].Price ?? new ResourceModel(string.Empty, 0);
 		}
@@ -87,9 +89,13 @@ namespace Game.ViewModel {
 		UnitViewModel CreateViewModel(UnitModel model) => new UnitViewModel(GetUnitConfig(model.Type), model, Resources);
 
 		[CanBeNull]
-		public UnitConfig GetUnitConfig(string unitType) => _config.Units.Find(u => u.Type == unitType);
+		public UnitConfig GetUnitConfig([NotNull] string unitType) {
+			Assert.IsNotNull(unitType, nameof(unitType));
+			return _config.Units.Find(u => u.Type == unitType);
+		}
 
-		public void UpgradeUnit(UnitViewModel unit) {
+		public void UpgradeUnit([NotNull] UnitViewModel unit) {
+			Assert.IsNotNull(unit, nameof(unit));
 			var config = GetUnitConfig(unit.Type);
 			if ( config == null ) {
 				return;
@@ -103,10 +109,12 @@ namespace Game.ViewModel {
 			}
 		}
 
-		public static GameViewModel Create(GameConfig config) => Create(config, null);
+		public static GameViewModel Create([NotNull] GameConfig config) => Create(config, null);
 
-		public static GameViewModel Create(GameConfig config, GameModel model) =>
-			new GameViewModel(config, model ?? CreateModel(config));
+		public static GameViewModel Create([NotNull] GameConfig config, GameModel model) {
+			Assert.IsNotNull(config, nameof(config));
+			return new GameViewModel(config, model ?? CreateModel(config));
+		}
 
 		static GameModel CreateModel(GameConfig config) {
 			var resourceNames = config.Resources.Select(r => r.Name);

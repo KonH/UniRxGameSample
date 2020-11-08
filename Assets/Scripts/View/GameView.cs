@@ -1,6 +1,7 @@
 ﻿using Game.Config;
 using Game.ViewModel;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Game.View {
 	public sealed class GameView : MonoBehaviour {
@@ -13,6 +14,11 @@ namespace Game.View {
 		SerializableGameViewModel _serializable;
 
 		public GameViewModel ViewModel { get; private set; }
+
+		void OnValidate() {
+			Assert.IsNotNull(_config, nameof(_config));
+			Assert.IsNotNull(_unitsView, nameof(_unitsView));
+		}
 
 		void Awake() => Init();
 

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Shared;
+using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Game.Model {
 	[Serializable]
@@ -11,7 +13,8 @@ namespace Game.Model {
 
 		public GameModel() {}
 
-		public GameModel(ResourcePack resources, IEnumerable<UnitModel> units) {
+		public GameModel([NotNull] ResourcePack resources, [NotNull] IEnumerable<UnitModel> units) {
+			Assert.IsNotNull(resources);
 			Resources = resources;
 			Units     = units.ToList();
 		}

@@ -4,6 +4,7 @@ using Game.Model;
 using Game.Shared;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Game.ViewModel {
 	public sealed class UnitViewModel {
@@ -28,6 +29,9 @@ namespace Game.ViewModel {
 		public ResourceViewModel Income { get; }
 
 		public UnitViewModel(UnitConfig config, UnitModel model, ResourcePackViewModel resources) {
+			Assert.IsNotNull(config, nameof(config));
+			Assert.IsNotNull(model, nameof(model));
+			Assert.IsNotNull(resources, nameof(resources));
 			_config       = config;
 			_model        = model;
 			_resources    = resources;
@@ -54,10 +58,9 @@ namespace Game.ViewModel {
 
 		ResourceModel GetUpgradePriceModel() {
 			var nextLevel = Level.Value + 1;
-			if ( nextLevel >= _config.Levels.Count ) {
-				return new ResourceModel(string.Empty, 0);
-			}
-			return _config.Levels[nextLevel].Price;
+			return (nextLevel >= _config.Levels.Count)
+				? new ResourceModel(string.Empty, 0)
+				: _config.Levels[nextLevel].Price;
 		}
 
 		bool IsUpgradeAvailable() {
@@ -66,11 +69,17 @@ namespace Game.ViewModel {
 		}
 
 		public void AddIncome(long amount, DateTimeOffset time) {
+			Assert.AreNotEqual(0, amount, nameof(amount));
+			Assert.AreNotEqual(default, time, nameof(time));
 			Income.Add(amount);
 			_model.LastIncomeTime = time.ToUnixTimeMilliseconds();
 		}
 
-		public void Upgrade() => _level.Value++;
+		public void Upgrade() {
+			_level.Value++;
+			var level = _level.Value;
+			Assert.IsTrue((level >= 0) && (level < _config.Levels.Count), nameof(level));
+		}
 
 		void OnLevelUpdated(int level) {
 			UpdateSprite(level);
@@ -78,7 +87,10 @@ namespace Game.ViewModel {
 			_canUpgrade.Value = IsUpgradeAvailable();
 		}
 
-		void UpdateSprite(int level) => _sprite.Value = _config.Levels[level].Sprite;
+		void UpdateSprite(int level) {
+			Assert.IsTrue((level >= 0) && (level < _config.Levels.Count), nameof(level));
+			_sprite.Value = _config.Levels[level].Sprite;
+		}
 
 		void UpdateUpgradePrice() => _upgradePrice.Value = GetUpgradePrice();
 	}

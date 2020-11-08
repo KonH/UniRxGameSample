@@ -1,7 +1,9 @@
 using Game.ViewModel;
+using JetBrains.Annotations;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Game.View {
@@ -18,7 +20,15 @@ namespace Game.View {
 
 		public string UnitType { get; private set; }
 
-		public void Init(GameViewModel game, string unitType) {
+		void OnValidate() {
+			Assert.IsNotNull(_priceImage, nameof(_priceImage));
+			Assert.IsNotNull(_priceText, nameof(_priceText));
+			Assert.IsNotNull(_button, nameof(_button));
+		}
+
+		public void Init([NotNull] GameViewModel game, [NotNull] string unitType) {
+			Assert.IsNotNull(game, nameof(game));
+			Assert.IsNotNull(unitType, nameof(unitType));
 			_game    = game;
 			UnitType = unitType;
 			var price     = _game.GetBuyPrice(unitType);
@@ -27,6 +37,7 @@ namespace Game.View {
 			_priceAmount = price.Amount;
 			_owner.SetupDisposables();
 			var requiredResource = resources.GetViewModel(price.Name);
+			Assert.IsNotNull(requiredResource, nameof(requiredResource));
 			requiredResource.Amount
 				.Select(GetAvailability)
 				.SubscribeToInteractable(_button)

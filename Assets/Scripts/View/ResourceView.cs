@@ -1,8 +1,10 @@
 using System;
 using Game.ViewModel;
+using JetBrains.Annotations;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Game.View {
 	public sealed class ResourceView : MonoBehaviour {
@@ -14,9 +16,16 @@ namespace Game.View {
 
 		long _lastAmount;
 
-		public void Init(ResourcePackViewModel packViewModel) {
+		void OnValidate() {
+			Assert.IsNotNull(_text, nameof(_text));
+			Assert.IsNotNull(_appearText, nameof(_appearText));
+		}
+
+		public void Init([NotNull] ResourcePackViewModel packViewModel) {
+			Assert.IsNotNull(packViewModel, nameof(packViewModel));
 			_owner.SetupDisposables();
 			var viewModel = packViewModel.GetViewModel(_name);
+			Assert.IsNotNull(viewModel, nameof(viewModel));
 			UpdateValue(viewModel.Amount.Value);
 			StopAppear();
 			viewModel.Amount
